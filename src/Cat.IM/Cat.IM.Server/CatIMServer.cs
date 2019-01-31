@@ -1,4 +1,5 @@
 ﻿using Cat.IM.Google.Protobuf;
+using Cat.IM.Server.Handle;
 using DotNetty.Codecs.Protobuf;
 using DotNetty.Handlers.Logging;
 using DotNetty.Handlers.Timeout;
@@ -17,17 +18,16 @@ namespace Cat.IM.Server
     {
         public async static void AddIMServer(this IServiceCollection services)
         {
+            var handler = services.BuildServiceProvider().GetService<ServerHandler>();
+
             IEventLoopGroup bossGroup = new MultithreadEventLoopGroup(1);
             IEventLoopGroup workerGroup = new MultithreadEventLoopGroup();
 
             try
             {
-                var bootstrap = new ServerBootstrap();
-                bootstrap.Group(bossGroup, workerGroup);
-
-                bootstrap.Channel<TcpServerSocketChannel>();
-
-                bootstrap
+                var bootstrap = new ServerBootstrap()
+                    .Group(bossGroup, workerGroup)
+                    .Channel<TcpServerSocketChannel>()
                     .Option(ChannelOption.SoBacklog, 100)
                     .Handler(new LoggingHandler("SRV-LSTN"))
                     .ChildHandler(new ActionChannelInitializer<IChannel>(channel =>
@@ -38,7 +38,8 @@ namespace Cat.IM.Server
                             .AddLast(new ProtobufVarint32FrameDecoder())
                             .AddLast(new ProtobufDecoder(ProtobufMessage.Parser))
                             .AddLast(new ProtobufVarint32LengthFieldPrepender())
-                            .AddLast(new ProtobufEncoder());
+                            .AddLast(new ProtobufEncoder())
+                            .AddLast(handler);
                     }));
 
                 IChannel boundChannel = await bootstrap.BindAsync(8850);
