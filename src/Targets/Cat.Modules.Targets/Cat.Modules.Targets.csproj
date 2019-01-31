@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Cat.Modules\Cat.Authorization\Cat.Authorization.csproj" />
+    <ProjectReference Include="..\..\Cat.Modules\Cat.System\Cat.System.csproj" />
+    <ProjectReference Include="..\..\Cat.Modules\Cat.Users\Cat.Users.csproj" />
+  </ItemGroup>
+
+</Project>
