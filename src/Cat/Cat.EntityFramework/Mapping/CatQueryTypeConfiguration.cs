@@ -14,7 +14,7 @@ namespace Cat.EntityFramework.Mapping
 
         public virtual void Configure(QueryTypeBuilder<TQuery> builder)
         {
-            this.PostConfigure(builder);
+            PostConfigure(builder);
         }
 
         public virtual void ApplyConfiguration(ModelBuilder modelBuilder)

@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package Protobuf;
+
+option csharp_namespace = "Cat.IM.Google.Protobuf";
+
+message ProtobufMessage {
+ int64 Id = 1;
+ string Body = 2;
+ int32 Type = 3;
+}

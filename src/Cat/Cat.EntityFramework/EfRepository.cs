@@ -153,12 +153,12 @@ namespace Cat.EntityFramework
         {
             get
             {
-                //if (_entities == null)
-                //    _entities = _context.Set<TEntity>();
+                if (_entities == null)
+                    _entities = _context.Set<TEntity>();
 
-                //return _entities;
+                return _entities;
 
-                return _entities = _context.Set<TEntity>();
+                //return _entities = _context.Set<TEntity>();
             }
         }
     }

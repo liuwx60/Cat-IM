@@ -1,4 +1,5 @@
-﻿using Cat.Core.Data;
+﻿using AutoMapper;
+using Cat.Core.Data;
 using Cat.Core.Extensions;
 using Cat.EntityFramework;
 using Microsoft.AspNetCore.Builder;
@@ -22,6 +23,18 @@ namespace Cat.Web
         
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("cors", x =>
+                {
+                    x.WithOrigins("*")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowAnyOrigin()
+                    .AllowCredentials();
+                });
+            });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             //services.AddDbContext<IDbContext, CatDbContext>(options =>
@@ -33,6 +46,8 @@ namespace Cat.Web
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 
             services.AddCat();
+
+            services.AddAutoMapper();
         }
         
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -45,6 +60,8 @@ namespace Cat.Web
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            app.UseCors("cors");
 
             app.UseStaticFiles();
 

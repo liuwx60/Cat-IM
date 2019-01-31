@@ -15,7 +15,7 @@ namespace Cat.EntityFramework.Mapping
 
         public virtual void Configure(EntityTypeBuilder<TEntity> builder)
         {
-            this.PostConfigure(builder);
+            PostConfigure(builder);
         }
 
         public virtual void ApplyConfiguration(ModelBuilder modelBuilder)
