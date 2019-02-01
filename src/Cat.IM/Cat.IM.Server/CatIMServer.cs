@@ -1,7 +1,7 @@
 ﻿using Cat.IM.Google.Protobuf;
-using Cat.IM.Server.Handle;
+using Cat.IM.Server.Actions;
+using Cat.IM.Server.Handler;
 using DotNetty.Codecs.Protobuf;
-using DotNetty.Handlers.Logging;
 using DotNetty.Handlers.Timeout;
 using DotNetty.Transport.Bootstrapping;
 using DotNetty.Transport.Channels;
@@ -9,8 +9,6 @@ using DotNetty.Transport.Channels.Sockets;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Cat.IM.Server
@@ -22,6 +20,7 @@ namespace Cat.IM.Server
         public async static void AddIMServer(this IServiceCollection services)
         {
             var logger = services.BuildServiceProvider().GetService<ILogger<ServerHandler>>();
+            var action = services.BuildServiceProvider().GetService<MessageAction>();
 
             IEventLoopGroup bossGroup = new MultithreadEventLoopGroup(1);
             IEventLoopGroup workerGroup = new MultithreadEventLoopGroup();
@@ -40,7 +39,7 @@ namespace Cat.IM.Server
                             .AddLast(new ProtobufDecoder(ProtobufMessage.Parser))
                             .AddLast(new ProtobufVarint32LengthFieldPrepender())
                             .AddLast(new ProtobufEncoder())
-                            .AddLast(new ServerHandler(logger));
+                            .AddLast(new ServerHandler(logger, action));
                     }));
 
                 BoundChannel = await bootstrap.BindAsync(8850);

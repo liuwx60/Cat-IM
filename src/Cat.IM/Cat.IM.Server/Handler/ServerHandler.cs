@@ -1,4 +1,6 @@
-﻿using Cat.IM.Google.Protobuf;
+﻿using Cat.IM.Core;
+using Cat.IM.Google.Protobuf;
+using Cat.IM.Server.Actions;
 using DotNetty.Common.Utilities;
 using DotNetty.Handlers.Timeout;
 using DotNetty.Transport.Channels;
@@ -8,17 +10,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Cat.IM.Server.Handle
+namespace Cat.IM.Server.Handler
 {
     public class ServerHandler : SimpleChannelInboundHandler<ProtobufMessage>
     {
-        private string Body { get; set; }
+        private Guid UserId { get; set; }
 
         private readonly ILogger<ServerHandler> _logger;
+        private readonly MessageAction _messageAction;
 
-        public ServerHandler(ILogger<ServerHandler> logger)
+        public ServerHandler(
+            ILogger<ServerHandler> logger,
+            MessageAction messageAction
+            )
         {
             _logger = logger;
+            _messageAction = messageAction;
         }
 
         public override void ChannelInactive(IChannelHandlerContext context)
@@ -34,7 +41,7 @@ namespace Cat.IM.Server.Handle
 
                 if (idleStateEvent.State == IdleState.ReaderIdle)
                 {
-                    _logger.LogInformation(context.Channel.Id + "-检查心跳:" + Body);
+                    _logger.LogInformation(context.Channel.Id + "-检查心跳:" + UserId);
                 }
             }
 
@@ -51,9 +58,9 @@ namespace Cat.IM.Server.Handle
 
         protected override void ChannelRead0(IChannelHandlerContext ctx, ProtobufMessage msg)
         {
-            _logger.LogDebug(ctx.Channel.Id + ":" + msg.Body);
-
-            Body = msg.Body;
+            _logger.LogDebug("收到消息:" + msg.ToString());
+            
+            _messageAction.Run(msg, ctx);
         }
     }
 }
