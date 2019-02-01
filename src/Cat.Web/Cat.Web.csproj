@@ -23,4 +23,11 @@
     <Folder Include="wwwroot\js\" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Content Update="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

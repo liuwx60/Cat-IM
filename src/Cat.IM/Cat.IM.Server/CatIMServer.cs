@@ -7,6 +7,7 @@ using DotNetty.Transport.Bootstrapping;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Sockets;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +17,11 @@ namespace Cat.IM.Server
 {
     public static class CatIMServer
     {
+        public static IChannel BoundChannel;
+
         public async static void AddIMServer(this IServiceCollection services)
         {
-            var handler = services.BuildServiceProvider().GetService<ServerHandler>();
+            var logger = services.BuildServiceProvider().GetService<ILogger<ServerHandler>>();
 
             IEventLoopGroup bossGroup = new MultithreadEventLoopGroup(1);
             IEventLoopGroup workerGroup = new MultithreadEventLoopGroup();
@@ -29,26 +32,26 @@ namespace Cat.IM.Server
                     .Group(bossGroup, workerGroup)
                     .Channel<TcpServerSocketChannel>()
                     .Option(ChannelOption.SoBacklog, 100)
-                    .Handler(new LoggingHandler("SRV-LSTN"))
                     .ChildHandler(new ActionChannelInitializer<IChannel>(channel =>
                     {
                         IChannelPipeline pipeline = channel.Pipeline
-                            .AddLast(new LoggingHandler("SRV-CONN"))
-                            .AddLast(new IdleStateHandler(60, 0, 0))
+                            .AddLast(new IdleStateHandler(10, 0, 0))
                             .AddLast(new ProtobufVarint32FrameDecoder())
                             .AddLast(new ProtobufDecoder(ProtobufMessage.Parser))
                             .AddLast(new ProtobufVarint32LengthFieldPrepender())
                             .AddLast(new ProtobufEncoder())
-                            .AddLast(handler);
+                            .AddLast(new ServerHandler(logger));
                     }));
 
-                IChannel boundChannel = await bootstrap.BindAsync(8850);
+                BoundChannel = await bootstrap.BindAsync(8850);
             }
-            finally
+            catch(Exception ex)
             {
                 await Task.WhenAll(
                     bossGroup.ShutdownGracefullyAsync(TimeSpan.FromMilliseconds(100), TimeSpan.FromSeconds(1)),
                     workerGroup.ShutdownGracefullyAsync(TimeSpan.FromMilliseconds(100), TimeSpan.FromSeconds(1)));
+
+                throw ex;
             }
         }
     }

@@ -19,21 +19,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cat.Core", "src\Cat\Cat.Cor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cat.EntityFramework", "src\Cat\Cat.EntityFramework\Cat.EntityFramework.csproj", "{23D6EAF2-91BD-4470-9810-2C9BE6A46AFA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cat.Authorization", "src\Cat.Modules\Cat.Authorization\Cat.Authorization.csproj", "{989E3A80-03FD-45E2-B96E-A305D1D6F433}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cat.Authorization", "src\Cat.Modules\Cat.Authorization\Cat.Authorization.csproj", "{989E3A80-03FD-45E2-B96E-A305D1D6F433}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cat.System", "src\Cat.Modules\Cat.System\Cat.System.csproj", "{2213B47E-19EB-4C13-9DBA-4B34A187AB29}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cat.System", "src\Cat.Modules\Cat.System\Cat.System.csproj", "{2213B47E-19EB-4C13-9DBA-4B34A187AB29}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cat.Users", "src\Cat.Modules\Cat.Users\Cat.Users.csproj", "{F524B49E-816D-4B93-8E22-90C90721B932}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cat.Users", "src\Cat.Modules\Cat.Users\Cat.Users.csproj", "{F524B49E-816D-4B93-8E22-90C90721B932}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cat.DotNetty.Targets", "src\Targets\Cat.DotNetty.Targets\Cat.DotNetty.Targets.csproj", "{A09E0682-31B5-4B37-9DD9-36C6947876B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cat.DotNetty.Targets", "src\Targets\Cat.DotNetty.Targets\Cat.DotNetty.Targets.csproj", "{A09E0682-31B5-4B37-9DD9-36C6947876B0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cat.IM", "Cat.IM", "{E5E70E61-D433-4E04-8036-F5E6EA97526D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cat.IM.Server", "src\Cat.IM\Cat.IM.Server\Cat.IM.Server.csproj", "{3995917F-5DF4-45C4-9241-E6155DA6439B}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cat.Modules.IM", "Cat.Modules.IM", "{68317F7C-1C98-4681-9E2D-978CCC4E654B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cat.IM.Google.Protobuf", "src\Cat.Modules.IM\Cat.IM.Google.Protobuf\Cat.IM.Google.Protobuf.csproj", "{2506271C-FDDE-4227-B844-F747A9B091B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cat.IM.Google.Protobuf", "src\Cat.Modules.IM\Cat.IM.Google.Protobuf\Cat.IM.Google.Protobuf.csproj", "{2506271C-FDDE-4227-B844-F747A9B091B1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cat.IM.Server", "src\Cat.IM\Cat.IM.Server\Cat.IM.Server.csproj", "{C62410F7-6A5F-41C9-A77C-9A0C517C373A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,14 +73,14 @@ Global
 		{A09E0682-31B5-4B37-9DD9-36C6947876B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A09E0682-31B5-4B37-9DD9-36C6947876B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A09E0682-31B5-4B37-9DD9-36C6947876B0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3995917F-5DF4-45C4-9241-E6155DA6439B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3995917F-5DF4-45C4-9241-E6155DA6439B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3995917F-5DF4-45C4-9241-E6155DA6439B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3995917F-5DF4-45C4-9241-E6155DA6439B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2506271C-FDDE-4227-B844-F747A9B091B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2506271C-FDDE-4227-B844-F747A9B091B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2506271C-FDDE-4227-B844-F747A9B091B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2506271C-FDDE-4227-B844-F747A9B091B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C62410F7-6A5F-41C9-A77C-9A0C517C373A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C62410F7-6A5F-41C9-A77C-9A0C517C373A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C62410F7-6A5F-41C9-A77C-9A0C517C373A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C62410F7-6A5F-41C9-A77C-9A0C517C373A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -98,9 +98,9 @@ Global
 		{F524B49E-816D-4B93-8E22-90C90721B932} = {98127F50-0C48-442E-BCE1-06FAEED3647A}
 		{A09E0682-31B5-4B37-9DD9-36C6947876B0} = {00CEFC02-453F-4AC0-B3E5-F150F5427081}
 		{E5E70E61-D433-4E04-8036-F5E6EA97526D} = {6031D9C6-E626-4E79-91BB-C25FF4639B1A}
-		{3995917F-5DF4-45C4-9241-E6155DA6439B} = {E5E70E61-D433-4E04-8036-F5E6EA97526D}
 		{68317F7C-1C98-4681-9E2D-978CCC4E654B} = {6031D9C6-E626-4E79-91BB-C25FF4639B1A}
 		{2506271C-FDDE-4227-B844-F747A9B091B1} = {68317F7C-1C98-4681-9E2D-978CCC4E654B}
+		{C62410F7-6A5F-41C9-A77C-9A0C517C373A} = {E5E70E61-D433-4E04-8036-F5E6EA97526D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {092F1259-8817-4421-B40F-A3A9F1A5163E}

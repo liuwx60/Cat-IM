@@ -25,7 +25,7 @@ namespace Cat.IM.Server
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddSingleton<ServerHandler>();
+            services.AddTransient<ServerHandler>();
 
             services.AddIMServer();
         }
