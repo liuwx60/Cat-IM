@@ -1,47 +1,43 @@
 ﻿using Cat.IM.Core;
 using Cat.IM.Google.Protobuf;
-using Cat.IM.Server.Actions;
-using DotNetty.Common.Utilities;
+using Cat.IM.Server.Controllers;
 using DotNetty.Handlers.Timeout;
 using DotNetty.Transport.Channels;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Cat.IM.Server.Handler
 {
     public class ServerHandler : SimpleChannelInboundHandler<ProtobufMessage>
     {
-        private Guid UserId { get; set; }
-
         private readonly ILogger<ServerHandler> _logger;
-        private readonly MessageAction _messageAction;
+        private readonly MessageController _messageController;
 
         public ServerHandler(
             ILogger<ServerHandler> logger,
-            MessageAction messageAction
+            MessageController messageController
             )
         {
             _logger = logger;
-            _messageAction = messageAction;
+            _messageController = messageController;
         }
 
         public override void ChannelInactive(IChannelHandlerContext context)
         {
+            _logger.LogDebug($"[{context.GetUserId()}]下线");
+
             base.ChannelInactive(context);
         }
 
         public override void UserEventTriggered(IChannelHandlerContext context, object evt)
         {
-            if (evt is IdleStateEvent)
+            if (evt is IdleStateEvent idleStateEvent)
             {
-                var idleStateEvent = (IdleStateEvent)evt;
-
                 if (idleStateEvent.State == IdleState.ReaderIdle)
                 {
-                    _logger.LogInformation(context.Channel.Id + "-检查心跳:" + UserId);
+                    _logger.LogInformation(context.Channel.Id + "-检查心跳:" + context.GetUserId());
+
+                    _messageController.HeartBeat(context);
                 }
             }
 
@@ -60,7 +56,7 @@ namespace Cat.IM.Server.Handler
         {
             _logger.LogDebug("收到消息:" + msg.ToString());
             
-            _messageAction.Run(msg, ctx);
+            _messageController.Executed(msg, ctx);
         }
     }
 }

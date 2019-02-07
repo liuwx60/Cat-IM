@@ -8,5 +8,9 @@ namespace Cat.Users.Services
         void Register(RegisterInput input);
 
         User Login(LoginInput input);
+
+        User Get(string username);
+
+        void ChangePassword(ChangePasswordInput input);
     }
 }

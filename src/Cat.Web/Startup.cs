@@ -4,7 +4,6 @@ using Cat.Core.Extensions;
 using Cat.EntityFramework;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -37,11 +36,10 @@ namespace Cat.Web
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            //services.AddDbContext<IDbContext, CatDbContext>(options =>
-            //    options.UseSqlServer(Configuration.GetConnectionString("DefaultContext")));
+            services.AddHttpContextAccessor();
 
             services.AddDbContext<IDbContext, CatDbContext>(options =>
-                options.UseSqlite("Data Source=MyTestDb.db"));
+                options.UseMySql(Configuration.GetConnectionString("MySqlContext")));
 
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 
@@ -62,12 +60,9 @@ namespace Cat.Web
             }
 
             app.UseCors("cors");
-
             app.UseStaticFiles();
-
-            app.UseMvc();
-
             app.UseCat();
+            app.UseMvc();
         }
     }
 }

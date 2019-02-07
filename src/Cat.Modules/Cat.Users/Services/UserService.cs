@@ -13,12 +13,15 @@ namespace Cat.Users.Services
     public class UserService : IUserService
     {
         private readonly IRepository<User> _userRepository;
+        private readonly IWorkContext _workContext;
 
         public UserService(
-            IRepository<User> userRepository
+            IRepository<User> userRepository, 
+            IWorkContext workContext
             )
         {
             _userRepository = userRepository;
+            _workContext = workContext;
         }
 
         public void Register(RegisterInput input)
@@ -42,6 +45,9 @@ namespace Cat.Users.Services
 
         public User Login(LoginInput input)
         {
+            Assert.IfNullOrWhiteSpaceThrow(input.Username, "用户名不能为空");
+            Assert.IfNullOrWhiteSpaceThrow(input.Password, "密码不能为空");
+
             var user = _userRepository.Table.FirstOrDefault(x => x.Username == input.Username);
 
             Assert.IfNullThrow(user, "用户不存在");
@@ -49,6 +55,28 @@ namespace Cat.Users.Services
             Assert.IfTrueThrow(input.Password.ToMD5() != user.Password, "密码错误");
 
             return user;
+        }
+
+        public User Get(string username)
+        {
+            var user = _userRepository.Table.FirstOrDefault(x => x.Username == username);
+
+            Assert.IfNullThrow(user, "用户不存在");
+
+            return user;
+        }
+
+        public void ChangePassword(ChangePasswordInput input)
+        {
+            Assert.IfNullOrWhiteSpaceThrow(input.Password1, "密码不能为空");
+            Assert.IfNullOrWhiteSpaceThrow(input.Password2, "密码不能为空");
+            Assert.IfTrueThrow(input.Password1 != input.Password2, "密码不一致");
+
+            var user = _workContext.CurrentUser;
+
+            user.Password = input.Password1.ToMD5();
+
+            _userRepository.Update(user);
         }
     }
 }

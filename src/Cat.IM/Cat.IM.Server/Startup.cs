@@ -1,4 +1,5 @@
-using Cat.IM.Server.Actions;
+using Cat.IM.Core.Extensions;
+using Cat.IM.Server.Controllers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -20,13 +21,14 @@ namespace Cat.IM.Server
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddScoped<MessageAction>();
+            services.AddScoped<MessageController>();
 
             services.AddIMServer();
         }
         
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseConsul(Configuration);
             app.UseMvc();
         }
     }

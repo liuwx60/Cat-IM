@@ -1,12 +1,11 @@
 ﻿using DotNetty.Transport.Channels;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace Cat.IM.Server.Channels
+namespace Cat.IM.Core
 {
-    public class ChannelHandler
+    public class SessionSocketHolder
     {
         public static Dictionary<Guid, IChannelHandlerContext> Channels = new Dictionary<Guid, IChannelHandlerContext>();
 

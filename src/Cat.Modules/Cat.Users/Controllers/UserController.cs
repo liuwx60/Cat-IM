@@ -19,14 +19,17 @@ namespace Cat.Users.Controllers
     {
         private readonly IUserService _userService;
         private readonly IAuthorizationManage _authorizationManage;
+        private readonly IWorkContext _workContext;
 
         public UserController(
             IUserService userService,
-            IAuthorizationManage authorizationManage
+            IAuthorizationManage authorizationManage,
+            IWorkContext workContext
             )
         {
             _userService = userService;
             _authorizationManage = authorizationManage;
+            _workContext = workContext;
         }
 
         [AllowAnonymous]
@@ -68,14 +71,11 @@ namespace Cat.Users.Controllers
         [HttpPost("api/user/get")]
         public IActionResult Get()
         {
-            var user = User.Claims;
+            var user = _workContext.CurrentUser;
 
-            if (!User.Identity.IsAuthenticated)
-            {
-                return BadRequest();
-            }
+            user.Password = null;
 
-            return Ok();
+            return Ok(user);
         }
     }
 }

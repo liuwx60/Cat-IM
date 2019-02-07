@@ -20,6 +20,7 @@ namespace Cat.Users
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IWorkContext, WorkContext>();
         }
     }
 }

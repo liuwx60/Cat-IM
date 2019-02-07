@@ -1,5 +1,5 @@
 ﻿using Cat.IM.Google.Protobuf;
-using Cat.IM.Server.Actions;
+using Cat.IM.Server.Controllers;
 using Cat.IM.Server.Handler;
 using DotNetty.Codecs.Protobuf;
 using DotNetty.Handlers.Timeout;
@@ -20,7 +20,7 @@ namespace Cat.IM.Server
         public async static void AddIMServer(this IServiceCollection services)
         {
             var logger = services.BuildServiceProvider().GetService<ILogger<ServerHandler>>();
-            var action = services.BuildServiceProvider().GetService<MessageAction>();
+            var action = services.BuildServiceProvider().GetService<MessageController>();
 
             IEventLoopGroup bossGroup = new MultithreadEventLoopGroup(1);
             IEventLoopGroup workerGroup = new MultithreadEventLoopGroup();

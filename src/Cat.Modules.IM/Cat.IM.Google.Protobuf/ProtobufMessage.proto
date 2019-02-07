@@ -4,8 +4,34 @@ package Protobuf;
 
 option csharp_namespace = "Cat.IM.Google.Protobuf";
 
+message Login {
+  string Token = 1;
+}
+
+message Ping {
+  string Body = 1;
+}
+
+message Chat {
+  int64 Id = 1;
+  string Body = 2;
+  string Sender = 3;
+  string Receiver = 4;
+  string SendOn = 5;
+}
+
 message ProtobufMessage {
- int64 Id = 1;
- string Body = 2;
- int32 Type = 3;
+  enum MessageType {
+    LOGIN = 0;
+    PING = 1;
+    CHAT = 2;
+  }
+
+  MessageType Type = 1;
+  
+  oneof Message {
+    Login Login = 2;
+    Ping Ping = 3;
+    Chat Chat = 4;
+  }
 }
