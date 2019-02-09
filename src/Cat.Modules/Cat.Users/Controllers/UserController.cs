@@ -1,6 +1,8 @@
 ﻿using Cat.Authorization.Filter;
 using Cat.Authorization.Services;
 using Cat.Authorization.ViewModels;
+using Cat.Core;
+using Cat.Users.Models;
 using Cat.Users.Services;
 using Cat.Users.ViewModels.Api;
 using Microsoft.AspNetCore.Authorization;
@@ -15,7 +17,7 @@ namespace Cat.Users.Controllers
 {
     [AuthorizeFilter]
     [ApiController]
-    public class UserController : Controller
+    public class UserController : BaseApiController
     {
         private readonly IUserService _userService;
         private readonly IAuthorizationManage _authorizationManage;
@@ -73,9 +75,7 @@ namespace Cat.Users.Controllers
         {
             var user = _workContext.CurrentUser;
 
-            user.Password = null;
-
-            return Ok(user);
+            return JsonObject<User, UserRecordOutput>(user);
         }
     }
 }
