@@ -70,7 +70,7 @@ namespace Cat.Users.Controllers
             return Ok(output);
         }
         
-        [HttpPost("api/user/get")]
+        [HttpGet("api/user/get")]
         public IActionResult Get()
         {
             var user = _workContext.CurrentUser;

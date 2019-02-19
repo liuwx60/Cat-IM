@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Swashbuckle.AspNetCore.Swagger;
+using System.Collections.Generic;
 
 namespace Cat.Web
 {
@@ -36,6 +38,20 @@ namespace Cat.Web
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+
+                var security = new Dictionary<string, IEnumerable<string>> { { "Cat.Web", new string[] { } }, };
+                c.AddSecurityRequirement(security);
+
+                c.AddSecurityDefinition("Cat.Web", new ApiKeyScheme
+                {
+                    Name = "Authorization",
+                    In = "header"
+                });
+            });
+
             services.AddHttpContextAccessor();
 
             services.AddDbContext<IDbContext, CatDbContext>(options =>
@@ -62,6 +78,13 @@ namespace Cat.Web
             app.UseCors("cors");
             app.UseStaticFiles();
             app.UseCat();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
+
             app.UseMvc();
         }
     }

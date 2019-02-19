@@ -21,6 +21,7 @@ namespace Cat.Users
         {
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IWorkContext, WorkContext>();
+            services.AddScoped<IFriendService, FriendService>();
         }
     }
 }
