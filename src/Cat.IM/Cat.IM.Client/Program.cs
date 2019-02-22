@@ -28,7 +28,7 @@ namespace Cat.IM.Client
                         IChannelPipeline pipeline = channel.Pipeline
                             .AddLast(new IdleStateHandler(0, 8, 0))
                             .AddLast(new ProtobufVarint32FrameDecoder())
-                            .AddLast(new ProtobufDecoder(ProtobufMessage.Parser))
+                            .AddLast(new ProtobufDecoder(CatMessage.Parser))
                             .AddLast(new ProtobufVarint32LengthFieldPrepender())
                             .AddLast(new ProtobufEncoder())
                             .AddLast(new ClientHandler());
@@ -53,9 +53,9 @@ namespace Cat.IM.Client
 
                         var token = Console.ReadLine();
 
-                        var message = new ProtobufMessage
+                        var message = new CatMessage
                         {
-                            Type = ProtobufMessage.Types.MessageType.Login,
+                            Type = CatMessage.Types.MessageType.Login,
                             Login = new Login
                             {
                                 Token = token
@@ -77,9 +77,9 @@ namespace Cat.IM.Client
 
                         var body = Console.ReadLine();
 
-                        var message = new ProtobufMessage
+                        var message = new CatMessage
                         {
-                            Type = ProtobufMessage.Types.MessageType.Chat,
+                            Type = CatMessage.Types.MessageType.Chat,
                             Chat = new Chat
                             {
                                 Id = 123123,

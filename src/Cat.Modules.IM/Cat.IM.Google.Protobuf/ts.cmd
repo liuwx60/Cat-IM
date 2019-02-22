@@ -1,0 +1,1 @@
+pbts -o CatMessage.d.ts CatMessage.js

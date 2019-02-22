@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace Cat.IM.Server
 {
@@ -23,7 +24,17 @@ namespace Cat.IM.Server
 
             services.AddScoped<MessageController>();
 
-            services.AddIMServer();
+            var heartBeatTime = Convert.ToInt32(Configuration["HeartBeatTime"]);
+            var webSocket = Convert.ToBoolean(Configuration["WebSocket"]);
+
+            if (webSocket)
+            {
+                services.AddWebIMServer(heartBeatTime);
+            }
+            else
+            {
+                services.AddIMServer(heartBeatTime);
+            }
         }
         
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

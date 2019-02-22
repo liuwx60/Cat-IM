@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package Protobuf;
+package CatMessage;
 
 option csharp_namespace = "Cat.IM.Google.Protobuf";
 
@@ -20,7 +20,7 @@ message Chat {
   string SendOn = 5;
 }
 
-message ProtobufMessage {
+message CatMessage {
   enum MessageType {
     LOGIN = 0;
     PING = 1;

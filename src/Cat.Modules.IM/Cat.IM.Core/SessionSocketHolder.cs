@@ -11,6 +11,11 @@ namespace Cat.IM.Core
 
         public static void Add(Guid userId, IChannelHandlerContext context)
         {
+            if (Channels.ContainsKey(userId))
+            {
+                Channels[userId] = context;
+                return;
+            }
             Channels.Add(userId, context);
         }
 

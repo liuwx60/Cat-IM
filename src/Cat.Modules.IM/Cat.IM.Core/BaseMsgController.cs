@@ -9,7 +9,7 @@ namespace Cat.IM.Core
 {
     public class BaseMsgController
     {
-        public void Executed(ProtobufMessage message, IChannelHandlerContext context)
+        public void Executed(CatMessage message, IChannelHandlerContext context)
         {
             var type = message.Type;
 

@@ -8,7 +8,7 @@ using System;
 
 namespace Cat.IM.Server.Handler
 {
-    public class ServerHandler : SimpleChannelInboundHandler<ProtobufMessage>
+    public class ServerHandler : SimpleChannelInboundHandler<CatMessage>
     {
         private readonly ILogger<ServerHandler> _logger;
         private readonly MessageController _messageController;
@@ -52,7 +52,7 @@ namespace Cat.IM.Server.Handler
             context.CloseAsync();
         }
 
-        protected override void ChannelRead0(IChannelHandlerContext ctx, ProtobufMessage msg)
+        protected override void ChannelRead0(IChannelHandlerContext ctx, CatMessage msg)
         {
             _logger.LogDebug("收到消息:" + msg.ToString());
             

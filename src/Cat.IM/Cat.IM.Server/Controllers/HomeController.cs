@@ -1,27 +1,35 @@
-﻿using Consul;
+﻿using Cat.IM.Core;
+using Cat.IM.Google.Protobuf;
+using Cat.IM.Server.ViewModels.Api;
+using Consul;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using static Cat.IM.Google.Protobuf.ProtobufMessage.Types;
 
 namespace Cat.IM.Server.Controllers
 {
     public class HomeController : Controller
     {
         private readonly IConfiguration _configuration;
+        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(IConfiguration configuration)
+        public HomeController(
+            IConfiguration configuration,
+            ILogger<HomeController> logger
+            )
         {
             _configuration = configuration;
+            _logger = logger;
         }
 
         [HttpGet("/a")]
         public IActionResult Index()
         {
-            return Content(MessageType.Chat.ToString());
+            return Content(CatMessage.Types.MessageType.Chat.ToString());
         }
 
         [HttpGet("/aa")]
@@ -34,8 +42,29 @@ namespace Cat.IM.Server.Controllers
             return Ok(service.Response);
         }
 
-        public IActionResult SendMessage()
+        public IActionResult SendMessage(SendMessageInput input)
         {
+            var context = SessionSocketHolder.Get(input.Receiver);
+
+            if (context == null)
+            {
+                _logger.LogWarning($"用户[{input.Receiver}]不在线！");
+            }
+
+            var message = new CatMessage
+            {
+                Type = CatMessage.Types.MessageType.Chat,
+                Chat = new Chat
+                {
+                    Id = input.Id,
+                    Sender = input.Sender.ToString(),
+                    Receiver = input.Receiver.ToString(),
+                    SendOn = input.SendOn.ToString(),
+                    Body = input.Body
+                }
+            };
+
+            context.WriteAndFlushAsync(message);
 
             return Ok();
         }

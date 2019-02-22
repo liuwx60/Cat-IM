@@ -1,7 +1,10 @@
 ﻿using Cat.IM.Core;
 using Cat.IM.Google.Protobuf;
 using Cat.IM.Server.ViewModels.Api;
+using DotNetty.Buffers;
+using DotNetty.Codecs.Http.WebSockets;
 using DotNetty.Transport.Channels;
+using Google.Protobuf;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using RestSharp;
@@ -27,7 +30,7 @@ namespace Cat.IM.Server.Controllers
         {
             var client = new RestClient($"{_configuration["ApiUrl"]}/api/user/get");
 
-            var request = new RestRequest(Method.POST)
+            var request = new RestRequest(Method.GET)
                 .AddHeader("Authorization", $"Bearer {input.Token}");
 
             var response = client.Execute<UserRecordInput>(request);

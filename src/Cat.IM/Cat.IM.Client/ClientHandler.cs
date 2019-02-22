@@ -7,9 +7,9 @@ using System.Text;
 
 namespace Cat.IM.Client
 {
-    public class ClientHandler : SimpleChannelInboundHandler<ProtobufMessage>
+    public class ClientHandler : SimpleChannelInboundHandler<CatMessage>
     {
-        protected override void ChannelRead0(IChannelHandlerContext ctx, ProtobufMessage msg)
+        protected override void ChannelRead0(IChannelHandlerContext ctx, CatMessage msg)
         {
             Console.WriteLine($"收到消息:{msg.ToString()}");
         }
@@ -20,9 +20,9 @@ namespace Cat.IM.Client
             {
                 if (idleStateEvent.State == IdleState.WriterIdle)
                 {
-                    var message = new ProtobufMessage
+                    var message = new CatMessage
                     {
-                        Type = ProtobufMessage.Types.MessageType.Ping,
+                        Type = CatMessage.Types.MessageType.Ping,
                         Ping = new Ping { Body = "ping" }
                     };
 
