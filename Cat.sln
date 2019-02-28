@@ -37,7 +37,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cat.IM.Server", "src\Cat.IM
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cat.IM.Core", "src\Cat.Modules.IM\Cat.IM.Core\Cat.IM.Core.csproj", "{160D2256-B84D-4185-A4E2-98EF0AE363B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cat.IM.Client", "src\Cat.IM\Cat.IM.Client\Cat.IM.Client.csproj", "{494267FA-967E-4989-9BE7-67CBEEE0DA73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cat.IM.Client", "src\Cat.IM\Cat.IM.Client\Cat.IM.Client.csproj", "{494267FA-967E-4989-9BE7-67CBEEE0DA73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cat.Chat", "src\Cat.Modules\Cat.Chat\Cat.Chat.csproj", "{0226B48F-0FE9-4139-B2A0-0E5A4F7FC6A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,6 +95,10 @@ Global
 		{494267FA-967E-4989-9BE7-67CBEEE0DA73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{494267FA-967E-4989-9BE7-67CBEEE0DA73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{494267FA-967E-4989-9BE7-67CBEEE0DA73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0226B48F-0FE9-4139-B2A0-0E5A4F7FC6A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0226B48F-0FE9-4139-B2A0-0E5A4F7FC6A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0226B48F-0FE9-4139-B2A0-0E5A4F7FC6A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0226B48F-0FE9-4139-B2A0-0E5A4F7FC6A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -115,6 +121,7 @@ Global
 		{C62410F7-6A5F-41C9-A77C-9A0C517C373A} = {E5E70E61-D433-4E04-8036-F5E6EA97526D}
 		{160D2256-B84D-4185-A4E2-98EF0AE363B2} = {68317F7C-1C98-4681-9E2D-978CCC4E654B}
 		{494267FA-967E-4989-9BE7-67CBEEE0DA73} = {E5E70E61-D433-4E04-8036-F5E6EA97526D}
+		{0226B48F-0FE9-4139-B2A0-0E5A4F7FC6A4} = {98127F50-0C48-442E-BCE1-06FAEED3647A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {092F1259-8817-4421-B40F-A3A9F1A5163E}

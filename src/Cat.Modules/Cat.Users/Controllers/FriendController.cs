@@ -1,6 +1,8 @@
 ﻿using Cat.Authorization.Filter;
 using Cat.Core;
+using Cat.Users.Models;
 using Cat.Users.Services;
+using Cat.Users.ViewModels.Api;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -16,6 +18,14 @@ namespace Cat.Users.Controllers
         public FriendController(IFriendService friendService)
         {
             _friendService = friendService;
+        }
+
+        [HttpGet("get")]
+        public IActionResult Get()
+        {
+            var list = _friendService.Get();
+
+            return JsonMappingList<User, UserRecordOutput>(list);
         }
 
         [HttpPost("add/{friendId}")]

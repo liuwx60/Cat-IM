@@ -1,16 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Cat.IM.Server.ViewModels.Api
+namespace Cat.Chat.ViewModels.Api
 {
     public class SendMessageInput
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
+
+        public string Body { get; set; }
 
         public Guid Sender { get; set; }
 
         public Guid Receiver { get; set; }
-
-        public string Body { get; set; }
 
         public DateTime SendOn { get; set; }
     }

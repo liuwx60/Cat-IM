@@ -12,14 +12,38 @@ namespace Cat.Users.Services
     {
         private readonly IRepository<Friend> _friendRepository;
         private readonly IWorkContext _workContext;
+        private readonly IRepository<User> _userRepository;
 
         public FriendService(
             IRepository<Friend> friendRepository, 
-            IWorkContext workContext
+            IWorkContext workContext,
+            IRepository<User> userRepository
             )
         {
             _friendRepository = friendRepository;
             _workContext = workContext;
+            _userRepository = userRepository;
+        }
+
+        public IList<User> Get()
+        {
+            var friendIds = _friendRepository
+                .Table
+                .Where(x => x.UserId == _workContext.CurrentUser.Id)
+                .Select(x => x.FriendId)
+                .Union(
+                    _friendRepository
+                    .Table
+                    .Where(x => x.FriendId == _workContext.CurrentUser.Id)
+                    .Select(x => x.UserId)
+                );
+
+            var users = _userRepository
+                .Table
+                .Where(x => friendIds.Contains(x.Id))
+                .ToList();
+
+            return users;
         }
 
         public void Add(Guid friendId)

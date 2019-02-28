@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace Cat.IM.Server.Controllers
 {
+    [ApiController]
     public class HomeController : Controller
     {
         private readonly IConfiguration _configuration;
@@ -42,6 +43,7 @@ namespace Cat.IM.Server.Controllers
             return Ok(service.Response);
         }
 
+        [HttpPost("/api/sendMessage")]
         public IActionResult SendMessage(SendMessageInput input)
         {
             var context = SessionSocketHolder.Get(input.Receiver);
