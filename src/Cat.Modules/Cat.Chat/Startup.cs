@@ -1,4 +1,5 @@
-﻿using Cat.Core;
+﻿using Cat.Chat.Services;
+using Cat.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using RestSharp;
@@ -19,7 +20,7 @@ namespace Cat.Chat
 
         public void ConfigureServices(IServiceCollection services)
         {
-            
+            services.AddScoped<IChatRecordService, ChatRecordService>();
         }
     }
 }

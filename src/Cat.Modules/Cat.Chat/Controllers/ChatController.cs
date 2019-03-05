@@ -1,4 +1,5 @@
 ﻿using Cat.Authorization.Filter;
+using Cat.Chat.Services;
 using Cat.Chat.ViewModels.Api;
 using Cat.Core;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,13 @@ namespace Cat.Chat.Controllers
     [Route("/api/chat")]
     public class ChatController : BaseApiController
     {
+        private readonly IChatRecordService _chatRecordService;
+
+        public ChatController(IChatRecordService chatRecordService)
+        {
+            _chatRecordService = chatRecordService;
+        }
+
         [HttpPost("sendMessage")]
         public IActionResult SendMsg(SendMessageInput input)
         {
@@ -30,6 +38,8 @@ namespace Cat.Chat.Controllers
                 {
                     throw response.ErrorException;
                 }
+
+                _chatRecordService.Add(input);
             }
             catch (Exception ex)
             {

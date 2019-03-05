@@ -51,6 +51,8 @@ namespace Cat.IM.Server.Controllers
             if (context == null)
             {
                 _logger.LogWarning($"用户[{input.Receiver}]不在线！");
+
+                return Ok();
             }
 
             var message = new CatMessage

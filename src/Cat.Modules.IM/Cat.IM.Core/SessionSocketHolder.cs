@@ -16,12 +16,15 @@ namespace Cat.IM.Core
                 Channels[userId] = context;
                 return;
             }
+
             Channels.Add(userId, context);
         }
 
         public static IChannelHandlerContext Get(Guid userId)
         {
-            return Channels[userId];
+            Channels.TryGetValue(userId, out IChannelHandlerContext context);
+
+            return context;
         }
     }
 }

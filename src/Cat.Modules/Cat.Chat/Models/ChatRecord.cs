@@ -1,14 +1,13 @@
-﻿using Cat.IM.Google.Protobuf;
+﻿using Cat.Core;
+using Cat.IM.Google.Protobuf;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Cat.Chat.ViewModels.Api
+namespace Cat.Chat.Models
 {
-    public class SendMessageInput
+    public class ChatRecord : BaseEntity
     {
-        public Guid Id { get; set; }
-
         public string Body { get; set; }
 
         public Guid Sender { get; set; }
@@ -18,5 +17,13 @@ namespace Cat.Chat.ViewModels.Api
         public DateTime SendOn { get; set; }
 
         public CatMessage.Types.MessageType Type { get; set; } = CatMessage.Types.MessageType.Chat;
+
+        public bool Received { get; set; }
+
+        public bool Read { get; set; }
+
+        public DateTime CreateOn { get; set; } = DateTime.Now;
+
+        public DateTime UpdateOn { get; set; } = DateTime.Now;
     }
 }

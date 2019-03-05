@@ -10,6 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Cat.Modules.IM\Cat.IM.Google.Protobuf\Cat.IM.Google.Protobuf.csproj" />
+    <ProjectReference Include="..\..\Cat\Cat.EntityFramework\Cat.EntityFramework.csproj" />
     <ProjectReference Include="..\Cat.Authorization\Cat.Authorization.csproj" />
   </ItemGroup>
 </Project>
