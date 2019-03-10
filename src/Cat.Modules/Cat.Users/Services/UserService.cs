@@ -78,5 +78,17 @@ namespace Cat.Users.Services
 
             _userRepository.Update(user);
         }
+
+        public void Update(UserRecordInput input)
+        {
+            var user = _userRepository.GetById(input.Id);
+
+            Assert.IfNullThrow(user, "用户不存在！");
+
+            user.NickName = input.NickName;
+            user.Gender = input.Gender;
+
+            _userRepository.Update(user);
+        }
     }
 }

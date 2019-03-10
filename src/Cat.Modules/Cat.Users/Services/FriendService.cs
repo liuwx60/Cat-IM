@@ -1,6 +1,8 @@
-﻿using Cat.Core;
+﻿using AutoMapper;
+using Cat.Core;
 using Cat.Core.Data;
 using Cat.Users.Models;
+using Cat.Users.ViewModels.Api;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,16 +15,19 @@ namespace Cat.Users.Services
         private readonly IRepository<Friend> _friendRepository;
         private readonly IWorkContext _workContext;
         private readonly IRepository<User> _userRepository;
+        private readonly IMapper _mapper;
 
         public FriendService(
             IRepository<Friend> friendRepository, 
             IWorkContext workContext,
-            IRepository<User> userRepository
+            IRepository<User> userRepository,
+            IMapper mapper
             )
         {
             _friendRepository = friendRepository;
             _workContext = workContext;
             _userRepository = userRepository;
+            _mapper = mapper;
         }
 
         public IList<User> Get()
@@ -90,6 +95,27 @@ namespace Cat.Users.Services
             Assert.IfNullThrow(friend, "对方不是您的好友，无法删除！");
 
             _friendRepository.Delete(friend);
+        }
+
+        public FriendFindOutput Find(string username)
+        {
+            var user = _userRepository
+                .TableNoTracking
+                .FirstOrDefault(x => x.Username == username);
+
+            Assert.IfNullThrow(user, "搜索的用户不存在！");
+
+            var friend = _friendRepository
+                .TableNoTracking
+                .FirstOrDefault(x =>
+                    (x.UserId == _workContext.CurrentUser.Id && x.FriendId == user.Id)
+                    || (x.UserId == user.Id && x.FriendId == _workContext.CurrentUser.Id));
+
+            var output = _mapper.Map<User, FriendFindOutput>(user);
+
+            output.IsFriend = friend != null;
+
+            return output;
         }
     }
 }

@@ -72,5 +72,22 @@ namespace Cat.Users.Controllers
 
             return Ok();
         }
+
+        [HttpGet("find/{username}")]
+        public IActionResult Find(string username)
+        {
+            FriendFindOutput output = null;
+
+            try
+            {
+                output = _friendService.Find(username);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            return Ok(output);
+        }
     }
 }

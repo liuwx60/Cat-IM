@@ -12,5 +12,7 @@ namespace Cat.Users.Services
         User Get(string username);
 
         void ChangePassword(ChangePasswordInput input);
+
+        void Update(UserRecordInput input);
     }
 }
