@@ -413,7 +413,8 @@ export namespace Cat {
         enum MessageType {
             LOGIN = 0,
             PING = 1,
-            CHAT = 2
+            CHAT = 2,
+            ADD_FRIEND = 1001
         }
     }
 }

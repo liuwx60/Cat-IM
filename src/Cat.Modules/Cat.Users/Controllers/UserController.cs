@@ -145,5 +145,17 @@ namespace Cat.Users.Controllers
 
             return Ok();
         }
+
+        [AllowAnonymous]
+        [HttpGet("api/user/avatar/{id}")]
+        public IActionResult Avatar(Guid id)
+        {
+            if (!System.IO.File.Exists($"{_hostingEnvironment.WebRootPath}/upload/avatar/{id}.jpg"))
+            {
+                return File("/avatar.jpg", "image/jpeg");
+            }
+
+            return File($"/upload/avatar/{id}.jpg", "image/jpeg");
+        }
     }
 }

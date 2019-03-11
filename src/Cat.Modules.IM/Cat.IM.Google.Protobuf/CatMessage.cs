@@ -27,12 +27,12 @@ namespace Cat.IM.Google.Protobuf {
             "ChBDYXRNZXNzYWdlLnByb3RvEgNDYXQiFgoFTG9naW4SDQoFVG9rZW4YASAB",
             "KAkiFAoEUGluZxIMCgRCb2R5GAEgASgJIlIKBENoYXQSCgoCSWQYASABKAkS",
             "DAoEQm9keRgCIAEoCRIOCgZTZW5kZXIYAyABKAkSEAoIUmVjZWl2ZXIYBCAB",
-            "KAkSDgoGU2VuZE9uGAUgASgJIsMBCgpDYXRNZXNzYWdlEikKBFR5cGUYASAB",
+            "KAkSDgoGU2VuZE9uGAUgASgJItQBCgpDYXRNZXNzYWdlEikKBFR5cGUYASAB",
             "KA4yGy5DYXQuQ2F0TWVzc2FnZS5NZXNzYWdlVHlwZRIbCgVMb2dpbhgCIAEo",
             "CzIKLkNhdC5Mb2dpbkgAEhkKBFBpbmcYAyABKAsyCS5DYXQuUGluZ0gAEhkK",
-            "BENoYXQYBCABKAsyCS5DYXQuQ2hhdEgAIiwKC01lc3NhZ2VUeXBlEgkKBUxP",
-            "R0lOEAASCAoEUElORxABEggKBENIQVQQAkIJCgdNZXNzYWdlQhmqAhZDYXQu",
-            "SU0uR29vZ2xlLlByb3RvYnVmYgZwcm90bzM="));
+            "BENoYXQYBCABKAsyCS5DYXQuQ2hhdEgAIj0KC01lc3NhZ2VUeXBlEgkKBUxP",
+            "R0lOEAASCAoEUElORxABEggKBENIQVQQAhIPCgpBRERfRlJJRU5EEOkHQgkK",
+            "B01lc3NhZ2VCGaoCFkNhdC5JTS5Hb29nbGUuUHJvdG9idWZiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -822,6 +822,7 @@ namespace Cat.IM.Google.Protobuf {
         [pbr::OriginalName("LOGIN")] Login = 0,
         [pbr::OriginalName("PING")] Ping = 1,
         [pbr::OriginalName("CHAT")] Chat = 2,
+        [pbr::OriginalName("ADD_FRIEND")] AddFriend = 1001,
       }
 
     }

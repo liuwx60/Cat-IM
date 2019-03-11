@@ -862,6 +862,7 @@ $root.Cat = (function() {
                 case 0:
                 case 1:
                 case 2:
+                case 1001:
                     break;
                 }
             if (message.Login != null && message.hasOwnProperty("Login")) {
@@ -919,6 +920,10 @@ $root.Cat = (function() {
             case "CHAT":
             case 2:
                 message.Type = 2;
+                break;
+            case "ADD_FRIEND":
+            case 1001:
+                message.Type = 1001;
                 break;
             }
             if (object.Login != null) {
@@ -992,12 +997,14 @@ $root.Cat = (function() {
          * @property {number} LOGIN=0 LOGIN value
          * @property {number} PING=1 PING value
          * @property {number} CHAT=2 CHAT value
+         * @property {number} ADD_FRIEND=1001 ADD_FRIEND value
          */
         CatMessage.MessageType = (function() {
             var valuesById = {}, values = Object.create(valuesById);
             values[valuesById[0] = "LOGIN"] = 0;
             values[valuesById[1] = "PING"] = 1;
             values[valuesById[2] = "CHAT"] = 2;
+            values[valuesById[1001] = "ADD_FRIEND"] = 1001;
             return values;
         })();
 
