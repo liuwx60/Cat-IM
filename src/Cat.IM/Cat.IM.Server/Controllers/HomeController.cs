@@ -57,16 +57,20 @@ namespace Cat.IM.Server.Controllers
 
             var message = new CatMessage
             {
-                Type = CatMessage.Types.MessageType.Chat,
-                Chat = new Chat
+                Type = input.Type
+            };
+
+            if (message.Type == CatMessage.Types.MessageType.Chat)
+            {
+                message.Chat = new Chat
                 {
                     Id = input.Id,
                     Sender = input.Sender.ToString(),
                     Receiver = input.Receiver.ToString(),
                     SendOn = input.SendOn.ToString(),
                     Body = input.Body
-                }
-            };
+                };
+            }
 
             context.WriteAndFlushAsync(message);
 

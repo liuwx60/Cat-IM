@@ -21,6 +21,7 @@ namespace Cat.Chat
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IChatRecordService, ChatRecordService>();
+            services.AddSingleton<IChatService, ChatService>();
         }
     }
 }

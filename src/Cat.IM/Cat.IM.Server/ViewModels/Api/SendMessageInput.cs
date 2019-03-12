@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cat.IM.Google.Protobuf;
+using System;
 
 namespace Cat.IM.Server.ViewModels.Api
 {
@@ -13,5 +14,7 @@ namespace Cat.IM.Server.ViewModels.Api
         public string Body { get; set; }
 
         public DateTime SendOn { get; set; }
+
+        public CatMessage.Types.MessageType Type { get; set; } = CatMessage.Types.MessageType.Chat;
     }
 }
