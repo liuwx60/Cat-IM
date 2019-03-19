@@ -20,6 +20,7 @@ namespace Cat.Users.Controllers
 {
     [AuthorizeFilter]
     [ApiController]
+    [Route("api/user")]
     public class UserController : BaseApiController
     {
         private readonly IUserService _userService;
@@ -41,7 +42,7 @@ namespace Cat.Users.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("api/user/register")]
+        [HttpPost("register")]
         public IActionResult Register(RegisterInput input)
         {
             try
@@ -57,7 +58,7 @@ namespace Cat.Users.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("api/user/login")]
+        [HttpPost("login")]
         public IActionResult Login(LoginInput input)
         {
             UserTokenOutput output = null;
@@ -76,7 +77,7 @@ namespace Cat.Users.Controllers
             return Ok(output);
         }
         
-        [HttpGet("api/user/get")]
+        [HttpGet("get")]
         public IActionResult Get()
         {
             var user = _workContext.CurrentUser;
@@ -84,7 +85,7 @@ namespace Cat.Users.Controllers
             return JsonObject<User, UserRecordOutput>(user);
         }
 
-        [HttpPut("api/user/edit")]
+        [HttpPut("edit")]
         public IActionResult Edit(UserRecordInput input)
         {
             try
@@ -101,7 +102,7 @@ namespace Cat.Users.Controllers
             return Ok();
         }
 
-        [HttpPost("api/user/upload/avatar")]
+        [HttpPost("upload/avatar")]
         public IActionResult UploadAvatar(IFormFile file)
         {
             try
@@ -147,7 +148,7 @@ namespace Cat.Users.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("api/user/avatar/{id}")]
+        [HttpGet("avatar/{id}")]
         public IActionResult Avatar(Guid id)
         {
             if (!System.IO.File.Exists($"{_hostingEnvironment.WebRootPath}/upload/avatar/{id}.jpg"))

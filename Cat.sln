@@ -39,7 +39,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cat.IM.Core", "src\Cat.Modu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cat.IM.Client", "src\Cat.IM\Cat.IM.Client\Cat.IM.Client.csproj", "{494267FA-967E-4989-9BE7-67CBEEE0DA73}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cat.Chat", "src\Cat.Modules\Cat.Chat\Cat.Chat.csproj", "{0226B48F-0FE9-4139-B2A0-0E5A4F7FC6A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cat.Chat", "src\Cat.Modules\Cat.Chat\Cat.Chat.csproj", "{0226B48F-0FE9-4139-B2A0-0E5A4F7FC6A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
