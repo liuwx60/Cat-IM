@@ -62,6 +62,12 @@ namespace Cat.Web
             services.AddCat();
 
             services.AddAutoMapper();
+
+            services.AddDistributedRedisCache(options =>
+            {
+                options.Configuration = Configuration["Redis:ConnectionString"];
+                options.InstanceName = Configuration["Redis:CatIm"];
+            });
         }
         
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

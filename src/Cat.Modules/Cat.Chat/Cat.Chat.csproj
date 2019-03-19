@@ -6,11 +6,12 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+    <PackageReference Include="RestSharp" Version="106.6.9" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Cat.Modules.IM\Cat.IM.Google.Protobuf\Cat.IM.Google.Protobuf.csproj" />
     <ProjectReference Include="..\..\Cat\Cat.EntityFramework\Cat.EntityFramework.csproj" />
     <ProjectReference Include="..\Cat.Authorization\Cat.Authorization.csproj" />
-    <ProjectReference Include="..\Cat.Chat\Cat.Chat.csproj" />
   </ItemGroup>
 </Project>

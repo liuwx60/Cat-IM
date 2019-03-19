@@ -24,16 +24,15 @@ namespace Cat.IM.Google.Protobuf {
     static CatMessageReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChBDYXRNZXNzYWdlLnByb3RvEgpDYXRNZXNzYWdlIhYKBUxvZ2luEg0KBVRv",
-            "a2VuGAEgASgJIhQKBFBpbmcSDAoEQm9keRgBIAEoCSJSCgRDaGF0EgoKAklk",
-            "GAEgASgDEgwKBEJvZHkYAiABKAkSDgoGU2VuZGVyGAMgASgJEhAKCFJlY2Vp",
-            "dmVyGAQgASgJEg4KBlNlbmRPbhgFIAEoCSLfAQoKQ2F0TWVzc2FnZRIwCgRU",
-            "eXBlGAEgASgOMiIuQ2F0TWVzc2FnZS5DYXRNZXNzYWdlLk1lc3NhZ2VUeXBl",
-            "EiIKBUxvZ2luGAIgASgLMhEuQ2F0TWVzc2FnZS5Mb2dpbkgAEiAKBFBpbmcY",
-            "AyABKAsyEC5DYXRNZXNzYWdlLlBpbmdIABIgCgRDaGF0GAQgASgLMhAuQ2F0",
-            "TWVzc2FnZS5DaGF0SAAiLAoLTWVzc2FnZVR5cGUSCQoFTE9HSU4QABIICgRQ",
-            "SU5HEAESCAoEQ0hBVBACQgkKB01lc3NhZ2VCGaoCFkNhdC5JTS5Hb29nbGUu",
-            "UHJvdG9idWZiBnByb3RvMw=="));
+            "ChBDYXRNZXNzYWdlLnByb3RvEgNDYXQiFgoFTG9naW4SDQoFVG9rZW4YASAB",
+            "KAkiFAoEUGluZxIMCgRCb2R5GAEgASgJIlIKBENoYXQSCgoCSWQYASABKAkS",
+            "DAoEQm9keRgCIAEoCRIOCgZTZW5kZXIYAyABKAkSEAoIUmVjZWl2ZXIYBCAB",
+            "KAkSDgoGU2VuZE9uGAUgASgJItQBCgpDYXRNZXNzYWdlEikKBFR5cGUYASAB",
+            "KA4yGy5DYXQuQ2F0TWVzc2FnZS5NZXNzYWdlVHlwZRIbCgVMb2dpbhgCIAEo",
+            "CzIKLkNhdC5Mb2dpbkgAEhkKBFBpbmcYAyABKAsyCS5DYXQuUGluZ0gAEhkK",
+            "BENoYXQYBCABKAsyCS5DYXQuQ2hhdEgAIj0KC01lc3NhZ2VUeXBlEgkKBUxP",
+            "R0lOEAASCAoEUElORxABEggKBENIQVQQAhIPCgpBRERfRlJJRU5EEOkHQgkK",
+            "B01lc3NhZ2VCGaoCFkNhdC5JTS5Hb29nbGUuUHJvdG9idWZiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -345,12 +344,12 @@ namespace Cat.IM.Google.Protobuf {
 
     /// <summary>Field number for the "Id" field.</summary>
     public const int IdFieldNumber = 1;
-    private long id_;
+    private string id_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public long Id {
+    public string Id {
       get { return id_; }
       set {
-        id_ = value;
+        id_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
@@ -422,7 +421,7 @@ namespace Cat.IM.Google.Protobuf {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (Id != 0L) hash ^= Id.GetHashCode();
+      if (Id.Length != 0) hash ^= Id.GetHashCode();
       if (Body.Length != 0) hash ^= Body.GetHashCode();
       if (Sender.Length != 0) hash ^= Sender.GetHashCode();
       if (Receiver.Length != 0) hash ^= Receiver.GetHashCode();
@@ -440,9 +439,9 @@ namespace Cat.IM.Google.Protobuf {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (Id != 0L) {
-        output.WriteRawTag(8);
-        output.WriteInt64(Id);
+      if (Id.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(Id);
       }
       if (Body.Length != 0) {
         output.WriteRawTag(18);
@@ -468,8 +467,8 @@ namespace Cat.IM.Google.Protobuf {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (Id != 0L) {
-        size += 1 + pb::CodedOutputStream.ComputeInt64Size(Id);
+      if (Id.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Id);
       }
       if (Body.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Body);
@@ -494,7 +493,7 @@ namespace Cat.IM.Google.Protobuf {
       if (other == null) {
         return;
       }
-      if (other.Id != 0L) {
+      if (other.Id.Length != 0) {
         Id = other.Id;
       }
       if (other.Body.Length != 0) {
@@ -520,8 +519,8 @@ namespace Cat.IM.Google.Protobuf {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
-          case 8: {
-            Id = input.ReadInt64();
+          case 10: {
+            Id = input.ReadString();
             break;
           }
           case 18: {
@@ -823,6 +822,7 @@ namespace Cat.IM.Google.Protobuf {
         [pbr::OriginalName("LOGIN")] Login = 0,
         [pbr::OriginalName("PING")] Ping = 1,
         [pbr::OriginalName("CHAT")] Chat = 2,
+        [pbr::OriginalName("ADD_FRIEND")] AddFriend = 1001,
       }
 
     }

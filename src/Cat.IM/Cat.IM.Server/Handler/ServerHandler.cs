@@ -54,7 +54,7 @@ namespace Cat.IM.Server.Handler
 
         protected override void ChannelRead0(IChannelHandlerContext ctx, CatMessage msg)
         {
-            _logger.LogDebug("收到消息:" + msg.ToString());
+            _logger.LogDebug(ctx.Channel.Id + "-收到消息:" + msg.ToString());
             
             _messageController.Executed(msg, ctx);
         }

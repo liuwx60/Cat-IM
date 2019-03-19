@@ -12,6 +12,7 @@ namespace Cat.Users
         public ApiMapper()
         {
             CreateMap<User, UserRecordOutput>();
+            CreateMap<User, FriendFindOutput>();
         }
     }
 }

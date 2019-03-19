@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package CatMessage;
+package Cat;
 
 option csharp_namespace = "Cat.IM.Google.Protobuf";
 
@@ -13,7 +13,7 @@ message Ping {
 }
 
 message Chat {
-  int64 Id = 1;
+  string Id = 1;
   string Body = 2;
   string Sender = 3;
   string Receiver = 4;
@@ -25,6 +25,7 @@ message CatMessage {
     LOGIN = 0;
     PING = 1;
     CHAT = 2;
+	ADD_FRIEND = 1001;
   }
 
   MessageType Type = 1;

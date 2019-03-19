@@ -82,7 +82,7 @@ namespace Cat.IM.Client
                             Type = CatMessage.Types.MessageType.Chat,
                             Chat = new Chat
                             {
-                                Id = 123123,
+                                Id = Guid.NewGuid().ToString(),
                                 Body = body,
                                 Receiver = receiverId,
                                 SendOn = DateTime.Now.ToString()

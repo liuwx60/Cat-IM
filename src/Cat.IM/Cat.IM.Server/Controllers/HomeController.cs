@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace Cat.IM.Server.Controllers
 {
+    [ApiController]
     public class HomeController : Controller
     {
         private readonly IConfiguration _configuration;
@@ -42,6 +43,7 @@ namespace Cat.IM.Server.Controllers
             return Ok(service.Response);
         }
 
+        [HttpPost("/api/sendMessage")]
         public IActionResult SendMessage(SendMessageInput input)
         {
             var context = SessionSocketHolder.Get(input.Receiver);
@@ -49,20 +51,26 @@ namespace Cat.IM.Server.Controllers
             if (context == null)
             {
                 _logger.LogWarning($"用户[{input.Receiver}]不在线！");
+
+                return Ok();
             }
 
             var message = new CatMessage
             {
-                Type = CatMessage.Types.MessageType.Chat,
-                Chat = new Chat
+                Type = input.Type
+            };
+
+            if (message.Type == CatMessage.Types.MessageType.Chat)
+            {
+                message.Chat = new Chat
                 {
                     Id = input.Id,
                     Sender = input.Sender.ToString(),
                     Receiver = input.Receiver.ToString(),
                     SendOn = input.SendOn.ToString(),
                     Body = input.Body
-                }
-            };
+                };
+            }
 
             context.WriteAndFlushAsync(message);
 
