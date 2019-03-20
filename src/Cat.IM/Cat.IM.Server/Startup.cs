@@ -1,6 +1,7 @@
 using Cat.Core.Extensions;
 using Cat.IM.Core.Extensions;
 using Cat.IM.Server.Controllers;
+using Cat.IM.Server.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -32,6 +33,8 @@ namespace Cat.IM.Server
                 options.Configuration = Configuration["Redis:ConnectionString"];
                 options.InstanceName = Configuration["Redis:InstanceName"];
             });
+
+            services.AddReceiverMsg($"{Configuration["Service:IP"]}:{Configuration["Service:Port"]}");
 
             var heartBeatTime = Convert.ToInt32(Configuration["HeartBeatTime"]);
             var webSocket = Convert.ToBoolean(Configuration["WebSocket"]);

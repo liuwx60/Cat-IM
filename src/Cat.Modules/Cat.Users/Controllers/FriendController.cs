@@ -1,4 +1,5 @@
 ﻿using Cat.Authorization.Filter;
+using Cat.Cache.Manage;
 using Cat.Core;
 using Cat.Core.Cache;
 using Cat.IM.Google.Protobuf;
@@ -20,19 +21,19 @@ namespace Cat.Users.Controllers
         private readonly IFriendService _friendService;
         private readonly IWorkContext _workContext;
         private readonly IRabbitManage _rabbitManage;
-        private readonly IDistributedCache _cache;
+        private readonly ICacheManage _cacheManage;
 
         public FriendController(
             IFriendService friendService,
             IWorkContext workContext,
             IRabbitManage rabbitManage,
-            IDistributedCache cache
+            ICacheManage cacheManage
             )
         {
             _friendService = friendService;
             _workContext = workContext;
             _rabbitManage = rabbitManage;
-            _cache = cache;
+            _cacheManage = cacheManage;
         }
 
         [HttpGet("get")]
@@ -62,7 +63,7 @@ namespace Cat.Users.Controllers
                     }
                 };
 
-                _rabbitManage.SendMsg(_cache.GetString($"{CacheKeys.ROUTER}{friendId}"), message);
+                _rabbitManage.SendMsg(_cacheManage.GetString($"{CacheKeys.ROUTER}{friendId}"), message);
             }
             catch (Exception ex)
             {

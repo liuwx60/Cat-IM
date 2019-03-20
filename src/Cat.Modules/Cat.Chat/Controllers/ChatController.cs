@@ -1,4 +1,5 @@
 ﻿using Cat.Authorization.Filter;
+using Cat.Cache.Manage;
 using Cat.Chat.Services;
 using Cat.Chat.ViewModels.Api;
 using Cat.Core;
@@ -6,11 +7,7 @@ using Cat.Core.Cache;
 using Cat.IM.Google.Protobuf;
 using Cat.Rabbit.Manage;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Distributed;
-using RestSharp;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Cat.Chat.Controllers
 {
@@ -21,17 +18,17 @@ namespace Cat.Chat.Controllers
     {
         private readonly IChatRecordService _chatRecordService;
         private readonly IRabbitManage _rabbitManage;
-        private readonly IDistributedCache _cache;
+        private readonly ICacheManage _cacheManage;
 
         public ChatController(
             IChatRecordService chatRecordService,
             IRabbitManage rabbitManage,
-            IDistributedCache cache
+            ICacheManage cacheManage
             )
         {
             _chatRecordService = chatRecordService;
             _rabbitManage = rabbitManage;
-            _cache = cache;
+            _cacheManage = cacheManage;
         }
 
         [HttpPost("sendMessage")]
@@ -52,7 +49,7 @@ namespace Cat.Chat.Controllers
                     }
                 };
 
-                _rabbitManage.SendMsg(_cache.GetString($"{CacheKeys.ROUTER}{input.Receiver}"),message);
+                _rabbitManage.SendMsg(_cacheManage.GetString($"{CacheKeys.ROUTER}{input.Receiver}"),message);
 
                 _chatRecordService.Add(input);
             }

@@ -10,15 +10,15 @@ namespace Cat.Users.Services
         private User _user;
 
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IRepository<User> _userRepository;
+        private readonly IUserService _userService;
 
         public WorkContext(
             IHttpContextAccessor httpContextAccessor, 
-            IRepository<User> userRepository
+            IUserService userService
             )
         {
             _httpContextAccessor = httpContextAccessor;
-            _userRepository = userRepository;
+            _userService = userService;
         }
 
         public User CurrentUser
@@ -30,7 +30,7 @@ namespace Cat.Users.Services
                     return _user;
                 }
 
-                _user = _userRepository.Table.FirstOrDefault(x => x.Username == _httpContextAccessor.HttpContext.User.Identity.Name);
+                _user = _userService.Get(_httpContextAccessor.HttpContext.User.Identity.Name);
 
                 return _user;
             }

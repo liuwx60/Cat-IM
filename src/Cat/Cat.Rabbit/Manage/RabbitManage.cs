@@ -1,5 +1,6 @@
 ﻿using Cat.IM.Google.Protobuf;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
@@ -17,9 +18,15 @@ namespace Cat.Rabbit.Manage
         private readonly IConnectionFactory _connectionFactory;
         private readonly IConnection _connection;
         private readonly IModel _channel;
+        private readonly ILogger<RabbitManage> _logger;
 
-        public RabbitManage(IConfiguration configuration)
+        public RabbitManage(
+            IConfiguration configuration,
+            ILogger<RabbitManage> logger
+            )
         {
+            _logger = logger;
+
             _connectionFactory = new ConnectionFactory
             {
                 HostName = configuration["Rabbit:HostName"],
@@ -37,6 +44,13 @@ namespace Cat.Rabbit.Manage
 
         public void SendMsg(string routeKey, CatMessage message)
         {
+            if (string.IsNullOrWhiteSpace(routeKey))
+            {
+                _logger.LogInformation($"用户[{message.Chat.Receiver}]不在线！");
+
+                return;
+            }
+
             _channel.QueueDeclare(QueueName, true, false, false, null);
 
             _channel.QueueBind(QueueName, ExchangeName, routeKey);

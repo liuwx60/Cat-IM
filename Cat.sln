@@ -41,7 +41,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cat.IM.Client", "src\Cat.IM
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cat.Chat", "src\Cat.Modules\Cat.Chat\Cat.Chat.csproj", "{0226B48F-0FE9-4139-B2A0-0E5A4F7FC6A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cat.Rabbit", "src\Cat\Cat.Rabbit\Cat.Rabbit.csproj", "{A51A736F-EC6F-4339-B6B5-4465D73CED4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cat.Rabbit", "src\Cat\Cat.Rabbit\Cat.Rabbit.csproj", "{A51A736F-EC6F-4339-B6B5-4465D73CED4B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cat.Cache", "src\Cat\Cat.Cache\Cat.Cache.csproj", "{1880B327-EC25-4667-8923-ECBD9E57F672}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -105,6 +107,10 @@ Global
 		{A51A736F-EC6F-4339-B6B5-4465D73CED4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A51A736F-EC6F-4339-B6B5-4465D73CED4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A51A736F-EC6F-4339-B6B5-4465D73CED4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1880B327-EC25-4667-8923-ECBD9E57F672}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1880B327-EC25-4667-8923-ECBD9E57F672}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1880B327-EC25-4667-8923-ECBD9E57F672}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1880B327-EC25-4667-8923-ECBD9E57F672}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -129,6 +135,7 @@ Global
 		{494267FA-967E-4989-9BE7-67CBEEE0DA73} = {E5E70E61-D433-4E04-8036-F5E6EA97526D}
 		{0226B48F-0FE9-4139-B2A0-0E5A4F7FC6A4} = {98127F50-0C48-442E-BCE1-06FAEED3647A}
 		{A51A736F-EC6F-4339-B6B5-4465D73CED4B} = {C66A9CAC-3F3A-4EFA-8A6B-0420FE2FFC82}
+		{1880B327-EC25-4667-8923-ECBD9E57F672} = {C66A9CAC-3F3A-4EFA-8A6B-0420FE2FFC82}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {092F1259-8817-4421-B40F-A3A9F1A5163E}
