@@ -1,4 +1,6 @@
-﻿using Cat.Core;
+﻿using Cat.Cache.Manage;
+using Cat.Core;
+using Cat.Core.Cache;
 using Cat.Core.Data;
 using Cat.Core.Encrypts;
 using Cat.Users.Models;
@@ -13,15 +15,15 @@ namespace Cat.Users.Services
     public class UserService : IUserService
     {
         private readonly IRepository<User> _userRepository;
-        private readonly IWorkContext _workContext;
+        private readonly ICacheManage _cacheManage;
 
         public UserService(
-            IRepository<User> userRepository, 
-            IWorkContext workContext
+            IRepository<User> userRepository,
+            ICacheManage cacheManage
             )
         {
             _userRepository = userRepository;
-            _workContext = workContext;
+            _cacheManage = cacheManage;
         }
 
         public void Register(RegisterInput input)
@@ -37,7 +39,7 @@ namespace Cat.Users.Services
             {
                 Username = input.Username,
                 Password = input.Password1.ToMD5(),
-                NickName = $"Cat_{Guid.NewGuid().ToString().Substring(0, 8)}",
+                NickName = $"Cat_{Guid.NewGuid().ToString().Substring(0, 8)}"
             };
 
             _userRepository.Insert(user);
@@ -59,7 +61,14 @@ namespace Cat.Users.Services
 
         public User Get(string username)
         {
-            var user = _userRepository.Table.FirstOrDefault(x => x.Username == username);
+            var user = _cacheManage.Get($"{CacheKeys.USER}{username}", () =>
+            {
+                var query = _userRepository.Table.FirstOrDefault(x => x.Username == username);
+
+                Assert.IfNullThrow(query, "用户不存在");
+
+                return query;
+            });
 
             Assert.IfNullThrow(user, "用户不存在");
 
@@ -72,7 +81,9 @@ namespace Cat.Users.Services
             Assert.IfNullOrWhiteSpaceThrow(input.Password2, "密码不能为空");
             Assert.IfTrueThrow(input.Password1 != input.Password2, "密码不一致");
 
-            var user = _workContext.CurrentUser;
+            var user = _userRepository.GetById(input.Id);
+
+            Assert.IfNullThrow(user, "用户不存在");
 
             user.Password = input.Password1.ToMD5();
 

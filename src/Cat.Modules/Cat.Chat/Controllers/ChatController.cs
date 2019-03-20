@@ -1,12 +1,13 @@
 ﻿using Cat.Authorization.Filter;
+using Cat.Cache.Manage;
 using Cat.Chat.Services;
 using Cat.Chat.ViewModels.Api;
 using Cat.Core;
+using Cat.Core.Cache;
+using Cat.IM.Google.Protobuf;
+using Cat.Rabbit.Manage;
 using Microsoft.AspNetCore.Mvc;
-using RestSharp;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Cat.Chat.Controllers
 {
@@ -16,10 +17,18 @@ namespace Cat.Chat.Controllers
     public class ChatController : BaseApiController
     {
         private readonly IChatRecordService _chatRecordService;
+        private readonly IRabbitManage _rabbitManage;
+        private readonly ICacheManage _cacheManage;
 
-        public ChatController(IChatRecordService chatRecordService)
+        public ChatController(
+            IChatRecordService chatRecordService,
+            IRabbitManage rabbitManage,
+            ICacheManage cacheManage
+            )
         {
             _chatRecordService = chatRecordService;
+            _rabbitManage = rabbitManage;
+            _cacheManage = cacheManage;
         }
 
         [HttpPost("sendMessage")]
@@ -27,17 +36,20 @@ namespace Cat.Chat.Controllers
         {
             try
             {
-                var client = new RestClient("http://localhost:55834/api/sendMessage");
-
-                var request = new RestRequest(Method.POST)
-                    .AddJsonBody(input);
-
-                var response = client.Execute(request);
-
-                if (!response.IsSuccessful)
+                var message = new CatMessage
                 {
-                    throw response.ErrorException;
-                }
+                    Type = input.Type,
+                    Chat = new IM.Google.Protobuf.Chat
+                    {
+                        Id = input.Id.ToString(),
+                        Body = input.Body,
+                        Sender = input.Sender.ToString(),
+                        Receiver = input.Receiver.ToString(),
+                        SendOn = input.SendOn.ToString(),
+                    }
+                };
+
+                _rabbitManage.SendMsg(_cacheManage.GetString($"{CacheKeys.ROUTER}{input.Receiver}"),message);
 
                 _chatRecordService.Add(input);
             }

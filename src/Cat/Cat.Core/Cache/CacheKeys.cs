@@ -7,5 +7,6 @@ namespace Cat.Core.Cache
     public class CacheKeys
     {
         public const string ROUTER = "catim-router:";
+        public const string USER = "user:";
     }
 }

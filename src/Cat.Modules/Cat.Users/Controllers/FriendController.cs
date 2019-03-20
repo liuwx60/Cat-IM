@@ -1,11 +1,14 @@
 ﻿using Cat.Authorization.Filter;
-using Cat.Chat.Services;
-using Cat.Chat.ViewModels.Api;
+using Cat.Cache.Manage;
 using Cat.Core;
+using Cat.Core.Cache;
+using Cat.IM.Google.Protobuf;
+using Cat.Rabbit.Manage;
 using Cat.Users.Models;
 using Cat.Users.Services;
 using Cat.Users.ViewModels.Api;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
 using System;
 
 namespace Cat.Users.Controllers
@@ -17,17 +20,20 @@ namespace Cat.Users.Controllers
     {
         private readonly IFriendService _friendService;
         private readonly IWorkContext _workContext;
-        private readonly IChatService _chatService;
+        private readonly IRabbitManage _rabbitManage;
+        private readonly ICacheManage _cacheManage;
 
         public FriendController(
             IFriendService friendService,
             IWorkContext workContext,
-            IChatService chatService
+            IRabbitManage rabbitManage,
+            ICacheManage cacheManage
             )
         {
             _friendService = friendService;
             _workContext = workContext;
-            _chatService = chatService;
+            _rabbitManage = rabbitManage;
+            _cacheManage = cacheManage;
         }
 
         [HttpGet("get")]
@@ -45,15 +51,19 @@ namespace Cat.Users.Controllers
             {
                 _friendService.Add(friendId);
 
-                var input = new SendMessageInput
+                var message = new CatMessage
                 {
-                    Sender = _workContext.CurrentUser.Id,
-                    Receiver = friendId,
-                    SendOn = DateTime.Now,
-                    Type = IM.Google.Protobuf.CatMessage.Types.MessageType.AddFriend
+                    Type = CatMessage.Types.MessageType.AddFriend,
+                    Chat = new Chat
+                    {
+                        Sender = _workContext.CurrentUser.Id.ToString(),
+                        Receiver = friendId.ToString(),
+                        SendOn = DateTime.Now.ToString(),
+                        Body = string.Empty
+                    }
                 };
 
-                _chatService.SendMsg(input);
+                _rabbitManage.SendMsg(_cacheManage.GetString($"{CacheKeys.ROUTER}{friendId}"), message);
             }
             catch (Exception ex)
             {
