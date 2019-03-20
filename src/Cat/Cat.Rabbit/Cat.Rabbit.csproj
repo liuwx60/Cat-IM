@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="RabbitMQ.Client" Version="5.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Cat.Modules.IM\Cat.IM.Google.Protobuf\Cat.IM.Google.Protobuf.csproj" />
+    <ProjectReference Include="..\Cat.Core\Cat.Core.csproj" />
+  </ItemGroup>
+
+</Project>

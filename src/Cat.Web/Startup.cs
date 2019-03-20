@@ -66,7 +66,7 @@ namespace Cat.Web
             services.AddDistributedRedisCache(options =>
             {
                 options.Configuration = Configuration["Redis:ConnectionString"];
-                options.InstanceName = Configuration["Redis:CatIm"];
+                options.InstanceName = Configuration["Redis:InstanceName"];
             });
         }
         

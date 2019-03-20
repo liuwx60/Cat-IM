@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Cat\Cat.EntityFramework\Cat.EntityFramework.csproj" />
+    <ProjectReference Include="..\..\Cat\Cat.Rabbit\Cat.Rabbit.csproj" />
     <ProjectReference Include="..\Cat.Authorization\Cat.Authorization.csproj" />
-    <ProjectReference Include="..\Cat.Chat\Cat.Chat.csproj" />
   </ItemGroup>
 </Project>

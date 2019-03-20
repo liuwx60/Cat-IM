@@ -1,10 +1,12 @@
-﻿using Cat.IM.Core;
+﻿using Cat.Core.Cache;
+using Cat.IM.Core;
 using Cat.IM.Google.Protobuf;
 using Cat.IM.Server.ViewModels.Api;
 using DotNetty.Buffers;
 using DotNetty.Codecs.Http.WebSockets;
 using DotNetty.Transport.Channels;
 using Google.Protobuf;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using RestSharp;
@@ -16,14 +18,17 @@ namespace Cat.IM.Server.Controllers
     {
         private readonly ILogger<MessageController> _logger;
         private readonly IConfiguration _configuration;
+        private readonly IDistributedCache _cache;
 
         public MessageController(
             ILogger<MessageController> logger,
-            IConfiguration configuration
+            IConfiguration configuration,
+            IDistributedCache cache
             )
         {
             _logger = logger;
             _configuration = configuration;
+            _cache = cache;
         }
 
         public void Login(Login input, IChannelHandlerContext context)
@@ -35,7 +40,7 @@ namespace Cat.IM.Server.Controllers
 
             var response = client.Execute<UserRecordInput>(request);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            if (!response.IsSuccessful)
             {
                 context.CloseAsync();
 
@@ -43,6 +48,10 @@ namespace Cat.IM.Server.Controllers
             }
 
             context.SetUserId(response.Data.Id);
+
+            _cache.SetStringAsync($"{CacheKeys.ROUTER}{response.Data.Id}", $"{_configuration["Service:IP"]}:{_configuration["Service:Port"]}");
+
+            var a = _cache.GetString($"{CacheKeys.ROUTER}{response.Data.Id}");
 
             SessionSocketHolder.Add(response.Data.Id, context);
         }

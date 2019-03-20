@@ -17,6 +17,7 @@
     <ProjectReference Include="..\..\Cat.Modules.IM\Cat.IM.Core\Cat.IM.Core.csproj" />
     <ProjectReference Include="..\..\Cat.Modules.IM\Cat.IM.Google.Protobuf\Cat.IM.Google.Protobuf.csproj" />
     <ProjectReference Include="..\..\Cat\Cat.Core\Cat.Core.csproj" />
+    <ProjectReference Include="..\..\Cat\Cat.Rabbit\Cat.Rabbit.csproj" />
     <ProjectReference Include="..\..\Targets\Cat.DotNetty.Targets\Cat.DotNetty.Targets.csproj" />
   </ItemGroup>
 
