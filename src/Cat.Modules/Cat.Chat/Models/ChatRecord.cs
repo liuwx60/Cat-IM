@@ -18,9 +18,9 @@ namespace Cat.Chat.Models
 
         public CatMessage.Types.MessageType Type { get; set; } = CatMessage.Types.MessageType.Chat;
 
-        public bool Received { get; set; }
+        public bool UnReceived { get; set; }
 
-        public bool Read { get; set; }
+        public bool Read { get; set; } = false;
 
         public DateTime CreateOn { get; set; } = DateTime.Now;
 

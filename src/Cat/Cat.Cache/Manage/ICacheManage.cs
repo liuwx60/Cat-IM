@@ -13,5 +13,7 @@ namespace Cat.Cache.Manage
         T Get<T>(string key, Func<T> func = null);
 
         void Set<T>(string key, T value);
+
+        void Remove(string key);
     }
 }

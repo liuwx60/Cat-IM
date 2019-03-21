@@ -29,8 +29,6 @@ namespace Cat.EntityFramework.Migrations
 
                     b.Property<bool>("Read");
 
-                    b.Property<bool>("Received");
-
                     b.Property<Guid>("Receiver");
 
                     b.Property<DateTime>("SendOn");
@@ -38,6 +36,8 @@ namespace Cat.EntityFramework.Migrations
                     b.Property<Guid>("Sender");
 
                     b.Property<int>("Type");
+
+                    b.Property<bool>("UnReceived");
 
                     b.Property<DateTime>("UpdateOn");
 
@@ -115,7 +115,7 @@ namespace Cat.EntityFramework.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime?>("CreatedOn");
+                    b.Property<DateTime>("CreatedOn");
 
                     b.Property<string>("Email")
                         .HasMaxLength(200);
@@ -130,10 +130,12 @@ namespace Cat.EntityFramework.Migrations
                     b.Property<string>("NickName")
                         .HasMaxLength(50);
 
+                    b.Property<DateTime>("OfflineOn");
+
                     b.Property<string>("Password")
                         .HasMaxLength(200);
 
-                    b.Property<DateTime?>("UpdatedOn");
+                    b.Property<DateTime>("UpdatedOn");
 
                     b.Property<string>("Username")
                         .HasMaxLength(100);

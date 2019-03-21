@@ -101,5 +101,18 @@ namespace Cat.Users.Services
 
             _userRepository.Update(user);
         }
+
+        public void Offline(Guid id)
+        {
+            var user = _userRepository.GetById(id);
+
+            Assert.IfNullThrow(user, "用户不存在！");
+
+            user.OfflineOn = DateTime.Now;
+
+            _userRepository.Update(user);
+
+            _cacheManage.Remove($"{CacheKeys.ROUTER}{id}");
+        }
     }
 }

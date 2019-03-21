@@ -49,7 +49,7 @@ namespace Cat.Chat.Controllers
                     }
                 };
 
-                _rabbitManage.SendMsg(_cacheManage.GetString($"{CacheKeys.ROUTER}{input.Receiver}"),message);
+                _rabbitManage.SendMsg(_cacheManage.GetString($"{CacheKeys.ROUTER}{input.Receiver}"), message);
 
                 _chatRecordService.Add(input);
             }
