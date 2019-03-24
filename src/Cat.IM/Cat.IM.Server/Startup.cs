@@ -1,13 +1,12 @@
 using Cat.Core.Extensions;
 using Cat.IM.Core.Extensions;
 using Cat.IM.Server.Controllers;
-using Cat.IM.Server.Extensions;
+using Cat.IM.Server.Run;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
 namespace Cat.IM.Server
 {
@@ -26,7 +25,7 @@ namespace Cat.IM.Server
 
             services.AddCat();
 
-            services.AddScoped<MessageController>();
+            services.AddSingleton<MessageController>();
 
             services.AddDistributedRedisCache(options =>
             {
@@ -34,19 +33,8 @@ namespace Cat.IM.Server
                 options.InstanceName = Configuration["Redis:InstanceName"];
             });
 
-            services.AddReceiverMsg($"{Configuration["Service:IP"]}:{Configuration["Service:Port"]}");
-
-            var heartBeatTime = Convert.ToInt32(Configuration["HeartBeatTime"]);
-            var webSocket = Convert.ToBoolean(Configuration["WebSocket"]);
-
-            if (webSocket)
-            {
-                services.AddWebIMServer(heartBeatTime);
-            }
-            else
-            {
-                services.AddIMServer(heartBeatTime);
-            }
+            services.AddSingleton<IStartupFilter, ReceiverMessage>();
+            services.AddSingleton<IStartupFilter, CatIMServer>();
         }
         
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

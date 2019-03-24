@@ -1,4 +1,5 @@
-﻿using Cat.Chat.Services;
+﻿using Cat.Chat.Run;
+using Cat.Chat.Services;
 using Cat.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +19,8 @@ namespace Cat.Chat
         {
             services.AddScoped<IChatRecordService, ChatRecordService>();
             services.AddSingleton<IChatService, ChatService>();
+            services.AddScoped<IOfflineMessageService, OfflineMessageService>();
+            services.AddReceiverOfflineMessage();
         }
     }
 }

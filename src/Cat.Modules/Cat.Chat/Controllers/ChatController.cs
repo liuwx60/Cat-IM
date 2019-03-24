@@ -19,16 +19,19 @@ namespace Cat.Chat.Controllers
         private readonly IChatRecordService _chatRecordService;
         private readonly IRabbitManage _rabbitManage;
         private readonly ICacheManage _cacheManage;
+        private readonly IOfflineMessageService _offlineMessageService;
 
         public ChatController(
             IChatRecordService chatRecordService,
             IRabbitManage rabbitManage,
-            ICacheManage cacheManage
+            ICacheManage cacheManage,
+            IOfflineMessageService offlineMessageService
             )
         {
             _chatRecordService = chatRecordService;
             _rabbitManage = rabbitManage;
             _cacheManage = cacheManage;
+            _offlineMessageService = offlineMessageService;
         }
 
         [HttpPost("sendMessage")]
@@ -59,6 +62,14 @@ namespace Cat.Chat.Controllers
             }
 
             return Ok();
+        }
+
+        [HttpGet("offlineMessage")]
+        public IActionResult OfflineMessage()
+        {
+            var pageList = _offlineMessageService.PagedList();
+
+            return JsonPagedList(pageList);
         }
     }
 }
