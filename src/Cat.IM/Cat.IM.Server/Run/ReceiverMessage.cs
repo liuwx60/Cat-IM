@@ -1,17 +1,16 @@
 ﻿using Cat.IM.Core;
 using Cat.Rabbit.Manage;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Cat.IM.Server.Run
 {
-    public class ReceiverMessage : IStartupFilter
+    public class ReceiverMessage : IHostedService
     {
         private readonly ILogger<ReceiverMessage> _logger;
         private readonly IRabbitManage _rabbitManage;
@@ -28,7 +27,7 @@ namespace Cat.IM.Server.Run
             _configuration = configuration;
         }
 
-        public Action<IApplicationBuilder> Configure(Action<IApplicationBuilder> next)
+        public Task StartAsync(CancellationToken cancellationToken)
         {
             var routerKey = $"{_configuration["Service:IP"]}:{_configuration["Service:Port"]}";
 
@@ -48,7 +47,12 @@ namespace Cat.IM.Server.Run
                 context.WriteAndFlushAsync(x);
             });
 
-            return next;
+            return Task.CompletedTask;
+        }
+
+        public Task StopAsync(CancellationToken cancellationToken)
+        {
+            return Task.CompletedTask;
         }
     }
 }

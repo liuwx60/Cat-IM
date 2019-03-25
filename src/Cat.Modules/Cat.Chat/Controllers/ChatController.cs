@@ -52,7 +52,17 @@ namespace Cat.Chat.Controllers
                     }
                 };
 
-                _rabbitManage.SendMsg(_cacheManage.GetString($"{CacheKeys.ROUTER}{input.Receiver}"), message);
+                var routeKey = _cacheManage.GetString($"{CacheKeys.ROUTER}{input.Receiver}");
+
+                if (string.IsNullOrWhiteSpace(routeKey))
+                {
+                    _rabbitManage.SendMsg("Cat.IM.OfflineMessage", message, "Cat.IM.OfflineMessage");
+                }
+                else
+                {
+                    _rabbitManage.SendMsg(routeKey, message);
+                }
+                
 
                 _chatRecordService.Add(input);
             }

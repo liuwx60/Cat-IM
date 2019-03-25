@@ -12,15 +12,17 @@ using DotNetty.Transport.Channels.Sockets;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Cat.IM.Server.Run
 {
-    public class CatIMServer : IStartupFilter
+    public class CatIMServer : IHostedService
     {
         private readonly ILogger<ServerHandler> _logger;
         private readonly IConfiguration _configuration;
@@ -40,19 +42,23 @@ namespace Cat.IM.Server.Run
             _heartBeatTime = Convert.ToInt32(_configuration["HeartBeatTime"]);
             _port = Convert.ToInt32(_configuration["Service:Port"]);
         }
-
-        public Action<IApplicationBuilder> Configure(Action<IApplicationBuilder> next)
+        
+        public async Task StartAsync(CancellationToken cancellationToken)
         {
             var webSocket = Convert.ToBoolean(_configuration["WebSocket"]);
 
             if (webSocket)
             {
-                WebIMServer().Wait();
-                return next;
+                await WebIMServer();
+                return;
             }
 
-            IMServer().Wait();
-            return next;
+            await IMServer();
+        }
+
+        public Task StopAsync(CancellationToken cancellationToken)
+        {
+            return Task.CompletedTask;
         }
 
         public async Task IMServer()

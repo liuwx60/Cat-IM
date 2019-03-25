@@ -83,5 +83,12 @@ namespace Cat.IM.Server.Controllers
                 context.CloseAsync();
             }
         }
+
+        public void Offline(IChannelHandlerContext context)
+        {
+            _cacheManage.Remove($"{CacheKeys.ROUTER}{context.GetUserId()}");
+
+            SessionSocketHolder.Remove(context.GetUserId());
+        }
     }
 }

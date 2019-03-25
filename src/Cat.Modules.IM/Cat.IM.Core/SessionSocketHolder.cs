@@ -26,5 +26,10 @@ namespace Cat.IM.Core
 
             return context;
         }
+
+        public static void Remove(Guid userId)
+        {
+            Channels.Remove(userId);
+        }
     }
 }

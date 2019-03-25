@@ -20,7 +20,7 @@ namespace Cat.Chat
             services.AddScoped<IChatRecordService, ChatRecordService>();
             services.AddSingleton<IChatService, ChatService>();
             services.AddScoped<IOfflineMessageService, OfflineMessageService>();
-            services.AddReceiverOfflineMessage();
+            services.AddHostedService<ReceiverOfflineMessage>();
         }
     }
 }

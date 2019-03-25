@@ -5,20 +5,35 @@ using Cat.Rabbit.Manage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Cat.Chat.Run
 {
-    public static class ReceiverOfflineMessage
+    public class ReceiverOfflineMessage : IHostedService
     {
-        public static void AddReceiverOfflineMessage(this IServiceCollection services)
-        {
-            var rabbitManage = services.BuildServiceProvider().GetService<IRabbitManage>();
-            var offlineMessageService = services.BuildServiceProvider().GetService<IOfflineMessageService>();
+        private readonly IRabbitManage _rabbitManage;
+        private readonly IServiceProvider _serviceProvider;
+        private IOfflineMessageService _offlineMessageService;
 
-            rabbitManage.Receiver("Cat.IM.OfflineMessage", x =>
+        public ReceiverOfflineMessage(
+            IRabbitManage rabbitManage,
+            IServiceProvider serviceProvider
+            )
+        {
+            _rabbitManage = rabbitManage;
+            _serviceProvider = serviceProvider;
+        }
+
+        public Task StartAsync(CancellationToken cancellationToken)
+        {
+            _offlineMessageService = _serviceProvider.CreateScope().ServiceProvider.GetRequiredService<IOfflineMessageService>();
+
+            _rabbitManage.Receiver("Cat.IM.OfflineMessage", x =>
             {
                 var offlineMessage = new OfflineMessage
                 {
@@ -30,9 +45,16 @@ namespace Cat.Chat.Run
                     Type = x.Type
                 };
 
-                offlineMessageService.Add(offlineMessage);
+                _offlineMessageService.Add(offlineMessage);
 
             }, "Cat.IM.OfflineMessage");
+
+            return Task.CompletedTask;
+        }
+
+        public Task StopAsync(CancellationToken cancellationToken)
+        {
+            return Task.CompletedTask;
         }
     }
 }
