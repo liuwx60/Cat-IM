@@ -8,7 +8,7 @@ namespace Cat.Rabbit
 {
     public class Startup : IStartup
     {
-        public int Order => 0;
+        public int Order => 3;
 
         public void Configure(IApplicationBuilder app)
         {

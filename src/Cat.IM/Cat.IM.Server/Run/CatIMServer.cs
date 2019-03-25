@@ -9,91 +9,98 @@ using DotNetty.Handlers.Timeout;
 using DotNetty.Transport.Bootstrapping;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Sockets;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
-namespace Cat.IM.Server
+namespace Cat.IM.Server.Run
 {
-    public static class CatIMServer
+    public class CatIMServer : IStartupFilter
     {
-        public static IChannel BoundChannel;
+        private readonly ILogger<ServerHandler> _logger;
+        private readonly IConfiguration _configuration;
+        private readonly MessageController _messageController;
+        private readonly int _heartBeatTime;
+        private readonly int _port;
 
-        public async static void AddIMServer(this IServiceCollection services, int heartBeatTime)
+        public CatIMServer(
+            ILogger<ServerHandler> logger,
+            IConfiguration configuration,
+            MessageController messageController
+            )
         {
-            var logger = services.BuildServiceProvider().GetService<ILogger<ServerHandler>>();
-            var action = services.BuildServiceProvider().GetService<MessageController>();
+            _logger = logger;
+            _configuration = configuration;
+            _messageController = messageController;
+            _heartBeatTime = Convert.ToInt32(_configuration["HeartBeatTime"]);
+            _port = Convert.ToInt32(_configuration["Service:Port"]);
+        }
 
+        public Action<IApplicationBuilder> Configure(Action<IApplicationBuilder> next)
+        {
+            var webSocket = Convert.ToBoolean(_configuration["WebSocket"]);
+
+            if (webSocket)
+            {
+                WebIMServer().Wait();
+                return next;
+            }
+
+            IMServer().Wait();
+            return next;
+        }
+
+        public async Task IMServer()
+        {
             IEventLoopGroup bossGroup = new MultithreadEventLoopGroup(1);
             IEventLoopGroup workerGroup = new MultithreadEventLoopGroup();
 
-            try
-            {
-                var bootstrap = new ServerBootstrap()
+            var bootstrap = new ServerBootstrap()
                     .Group(bossGroup, workerGroup)
                     .Channel<TcpServerSocketChannel>()
                     .Option(ChannelOption.SoBacklog, 100)
                     .ChildHandler(new ActionChannelInitializer<IChannel>(channel =>
                     {
                         IChannelPipeline pipeline = channel.Pipeline
-                            .AddLast(new IdleStateHandler(heartBeatTime, 0, 0))
+                            .AddLast(new IdleStateHandler(_heartBeatTime, 0, 0))
                             .AddLast(new ProtobufVarint32FrameDecoder())
                             .AddLast(new ProtobufDecoder(CatMessage.Parser))
                             .AddLast(new ProtobufVarint32LengthFieldPrepender())
                             .AddLast(new ProtobufEncoder())
-                            .AddLast(new ServerHandler(logger, action));
+                            .AddLast(new ServerHandler(_logger, _messageController));
                     }));
 
-                BoundChannel = await bootstrap.BindAsync(8850);
-            }
-            catch(Exception ex)
-            {
-                await Task.WhenAll(
-                    bossGroup.ShutdownGracefullyAsync(TimeSpan.FromMilliseconds(100), TimeSpan.FromSeconds(1)),
-                    workerGroup.ShutdownGracefullyAsync(TimeSpan.FromMilliseconds(100), TimeSpan.FromSeconds(1)));
-
-                throw ex;
-            }
+            await bootstrap.BindAsync(_port);
         }
 
-        public async static void AddWebIMServer(this IServiceCollection services, int heartBeatTime)
+        public async Task WebIMServer()
         {
-            var logger = services.BuildServiceProvider().GetService<ILogger<ServerHandler>>();
-            var action = services.BuildServiceProvider().GetService<MessageController>();
-
             IEventLoopGroup bossGroup = new MultithreadEventLoopGroup(1);
             IEventLoopGroup workerGroup = new MultithreadEventLoopGroup();
 
-            try
-            {
-                var bootstrap = new ServerBootstrap()
+            var bootstrap = new ServerBootstrap()
                     .Group(bossGroup, workerGroup)
                     .Channel<TcpServerSocketChannel>()
                     .Option(ChannelOption.SoBacklog, 8192)
                     .ChildHandler(new ActionChannelInitializer<IChannel>(channel =>
                     {
                         IChannelPipeline pipeline = channel.Pipeline
-                            .AddLast(new IdleStateHandler(heartBeatTime, 0, 0))
+                            .AddLast(new IdleStateHandler(_heartBeatTime, 0, 0))
                             .AddLast(new HttpServerCodec())
                             .AddLast(new HttpObjectAggregator(65536))
                             .AddLast(new WebSocketDecoder())
                             .AddLast(new ProtobufDecoder(CatMessage.Parser))
                             .AddLast(new WebSocketEncoder())
                             .AddLast(new WebSocketServerProtocolHandler("/ws", null, true))
-                            .AddLast(new ServerHandler(logger, action));
+                            .AddLast(new ServerHandler(_logger, _messageController));
                     }));
 
-                BoundChannel = await bootstrap.BindAsync(8850);
-            }
-            catch (Exception ex)
-            {
-                await Task.WhenAll(
-                    bossGroup.ShutdownGracefullyAsync(TimeSpan.FromMilliseconds(100), TimeSpan.FromSeconds(1)),
-                    workerGroup.ShutdownGracefullyAsync(TimeSpan.FromMilliseconds(100), TimeSpan.FromSeconds(1)));
-
-                throw ex;
-            }
+            await bootstrap.BindAsync(_port);
         }
     }
 }

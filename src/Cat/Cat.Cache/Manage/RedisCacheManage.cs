@@ -59,5 +59,10 @@ namespace Cat.Cache.Manage
         {
             _cache.SetString(key, Newtonsoft.Json.JsonConvert.SerializeObject(value));
         }
+
+        public void Remove(string key)
+        {
+            _cache.Remove(key);
+        }
     }
 }

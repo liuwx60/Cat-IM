@@ -21,8 +21,10 @@ namespace Cat.Users.Models
 
         public DateTime? LastLoginTime { get; set; }
 
-        public DateTime? CreatedOn { get; set; } = DateTime.Now;
+        public DateTime OfflineOn { get; set; } = DateTime.Now;
 
-        public DateTime? UpdatedOn { get; set; }
+        public DateTime CreatedOn { get; set; } = DateTime.Now;
+
+        public DateTime UpdatedOn { get; set; } = DateTime.Now;
     }
 }

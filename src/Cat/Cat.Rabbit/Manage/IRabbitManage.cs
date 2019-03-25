@@ -7,8 +7,8 @@ namespace Cat.Rabbit.Manage
 {
     public interface IRabbitManage
     {
-        void SendMsg(string routeKey, CatMessage message);
+        void SendMsg(string routeKey, CatMessage message, string queueName = "Cat.IM.Chat");
 
-        void Receiver(string routeKey, Action<CatMessage> action);
+        void Receiver(string routeKey, Action<CatMessage> action = null, string queueName = "Cat.IM.Chat");
     }
 }

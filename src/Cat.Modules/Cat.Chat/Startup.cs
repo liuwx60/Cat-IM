@@ -1,11 +1,8 @@
-﻿using Cat.Chat.Services;
+﻿using Cat.Chat.Run;
+using Cat.Chat.Services;
 using Cat.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Cat.Chat
 {
@@ -22,6 +19,8 @@ namespace Cat.Chat
         {
             services.AddScoped<IChatRecordService, ChatRecordService>();
             services.AddSingleton<IChatService, ChatService>();
+            services.AddScoped<IOfflineMessageService, OfflineMessageService>();
+            services.AddReceiverOfflineMessage();
         }
     }
 }

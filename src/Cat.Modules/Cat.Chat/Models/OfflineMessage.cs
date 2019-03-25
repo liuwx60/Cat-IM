@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Cat.Chat.Models
 {
-    public class ChatRecord : BaseEntity
+    public class OfflineMessage : BaseEntity
     {
         public string Body { get; set; }
 
@@ -17,10 +17,6 @@ namespace Cat.Chat.Models
         public DateTime SendOn { get; set; }
 
         public CatMessage.Types.MessageType Type { get; set; } = CatMessage.Types.MessageType.Chat;
-
-        public bool UnReceived { get; set; }
-
-        public bool Read { get; set; } = false;
 
         public DateTime CreateOn { get; set; } = DateTime.Now;
 

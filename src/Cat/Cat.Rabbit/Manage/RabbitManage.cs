@@ -42,7 +42,7 @@ namespace Cat.Rabbit.Manage
             _channel.ExchangeDeclare(ExchangeName, ExchangeType.Topic, true);
         }
 
-        public void SendMsg(string routeKey, CatMessage message)
+        public void SendMsg(string routeKey, CatMessage message, string queueName = "Cat.IM.Chat")
         {
             if (string.IsNullOrWhiteSpace(routeKey))
             {
@@ -51,9 +51,9 @@ namespace Cat.Rabbit.Manage
                 return;
             }
 
-            _channel.QueueDeclare(QueueName, true, false, false, null);
+            _channel.QueueDeclare(queueName, true, false, false, null);
 
-            _channel.QueueBind(QueueName, ExchangeName, routeKey);
+            _channel.QueueBind(queueName, ExchangeName, routeKey);
 
             var basicProperties = _channel.CreateBasicProperties();
             basicProperties.DeliveryMode = 2;
@@ -75,11 +75,11 @@ namespace Cat.Rabbit.Manage
             _channel.BasicPublish(address, basicProperties, buffer);
         }
 
-        public void Receiver(string routeKey, Action<CatMessage> action)
+        public void Receiver(string routeKey, Action<CatMessage> action = null, string queueName = "Cat.IM.Chat")
         {
-            _channel.QueueDeclare(QueueName, true, false, false, null);
+            _channel.QueueDeclare(queueName, true, false, false, null);
 
-            _channel.QueueBind(QueueName, ExchangeName, routeKey);
+            _channel.QueueBind(queueName, ExchangeName, routeKey);
 
             EventingBasicConsumer consumer = new EventingBasicConsumer(_channel);
 
@@ -97,7 +97,7 @@ namespace Cat.Rabbit.Manage
                 _channel.BasicAck(ea.DeliveryTag, false);
             };
 
-            _channel.BasicConsume(QueueName, false, consumer);
+            _channel.BasicConsume(queueName, false, consumer);
         }
     }
 }

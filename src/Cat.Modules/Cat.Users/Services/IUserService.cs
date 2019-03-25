@@ -1,5 +1,6 @@
 ﻿using Cat.Users.Models;
 using Cat.Users.ViewModels.Api;
+using System;
 
 namespace Cat.Users.Services
 {
@@ -14,5 +15,7 @@ namespace Cat.Users.Services
         void ChangePassword(ChangePasswordInput input);
 
         void Update(UserRecordInput input);
+
+        void Offline(Guid id);
     }
 }

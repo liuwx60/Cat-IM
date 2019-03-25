@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,18 +28,21 @@ namespace Cat.Users.Controllers
         private readonly IAuthorizationManage _authorizationManage;
         private readonly IWorkContext _workContext;
         private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly ILogger<UserController> _logger;
 
         public UserController(
             IUserService userService,
             IAuthorizationManage authorizationManage,
             IWorkContext workContext,
-            IHostingEnvironment hostingEnvironment
+            IHostingEnvironment hostingEnvironment,
+            ILogger<UserController> logger
             )
         {
             _userService = userService;
             _authorizationManage = authorizationManage;
             _workContext = workContext;
             _hostingEnvironment = hostingEnvironment;
+            _logger = logger;
         }
 
         [AllowAnonymous]
@@ -157,6 +161,22 @@ namespace Cat.Users.Controllers
             }
 
             return File($"/upload/avatar/{id}.jpg", "image/jpeg");
+        }
+
+        [AllowAnonymous]
+        [HttpPost("offline")]
+        public IActionResult Offline()
+        {
+            try
+            {
+                _userService.Offline(_workContext.CurrentUser.Id);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+            }
+
+            return Ok();
         }
     }
 }
