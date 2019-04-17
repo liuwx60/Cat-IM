@@ -5,7 +5,9 @@ using Cat.IM.Server.Handler;
 using DotNetty.Codecs.Http;
 using DotNetty.Codecs.Http.WebSockets;
 using DotNetty.Codecs.Protobuf;
+using DotNetty.Handlers.Logging;
 using DotNetty.Handlers.Timeout;
+using DotNetty.Handlers.Tls;
 using DotNetty.Transport.Bootstrapping;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Sockets;
@@ -17,6 +19,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -89,13 +92,31 @@ namespace Cat.IM.Server.Run
             IEventLoopGroup bossGroup = new MultithreadEventLoopGroup(1);
             IEventLoopGroup workerGroup = new MultithreadEventLoopGroup();
 
+            var isSsl = Convert.ToBoolean(_configuration["SSL:IsSsl"]);
+
+            X509Certificate2 tlsCertificate = null;
+            if (isSsl)
+            {
+                var path = _configuration["SSL:Path"];
+                var password = _configuration["SSL:Password"];
+
+                tlsCertificate = string.IsNullOrWhiteSpace(password) ? new X509Certificate2(path) : new X509Certificate2(path, password);
+            }
+
             var bootstrap = new ServerBootstrap()
                     .Group(bossGroup, workerGroup)
                     .Channel<TcpServerSocketChannel>()
                     .Option(ChannelOption.SoBacklog, 8192)
                     .ChildHandler(new ActionChannelInitializer<IChannel>(channel =>
                     {
-                        IChannelPipeline pipeline = channel.Pipeline
+                        IChannelPipeline pipeline = channel.Pipeline;
+
+                        if (isSsl)
+                        {
+                            pipeline.AddLast(TlsHandler.Server(tlsCertificate));
+                        }
+
+                        pipeline
                             .AddLast(new IdleStateHandler(_heartBeatTime, 0, 0))
                             .AddLast(new HttpServerCodec())
                             .AddLast(new HttpObjectAggregator(65536))
