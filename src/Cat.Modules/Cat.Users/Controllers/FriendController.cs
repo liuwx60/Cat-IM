@@ -10,6 +10,8 @@ using Cat.Users.ViewModels.Api;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Cat.Users.Controllers
 {
@@ -37,15 +39,22 @@ namespace Cat.Users.Controllers
         }
 
         [HttpGet("get")]
-        public IActionResult Get()
+        public ActionResult<IList<UserRecordOutput>> Get()
         {
-            var list = _friendService.Get();
+            try
+            {
+                var list = _friendService.Get();
 
-            return JsonMappingList<User, UserRecordOutput>(list);
+                return JsonMappingList<User, UserRecordOutput>(list);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost("add/{friendId}")]
-        public IActionResult Add(Guid friendId)
+        public async Task<IActionResult> Add(Guid friendId)
         {
             try
             {
@@ -63,7 +72,9 @@ namespace Cat.Users.Controllers
                     }
                 };
 
-                _rabbitManage.SendMsg(_cacheManage.GetString($"{CacheKeys.ROUTER}{friendId}"), message);
+                var router = await _cacheManage.GetStringAsync($"{CacheKeys.ROUTER}{friendId}");
+
+                _rabbitManage.SendMsg(router, message);
             }
             catch (Exception ex)
             {
@@ -74,7 +85,7 @@ namespace Cat.Users.Controllers
         }
 
         [HttpPut("black/{friendId}")]
-        public IActionResult Black(Guid friendId)
+        public ActionResult Black(Guid friendId)
         {
             try
             {
@@ -89,7 +100,7 @@ namespace Cat.Users.Controllers
         }
 
         [HttpDelete("delete/{friendId}")]
-        public IActionResult Delete(Guid friendId)
+        public ActionResult Delete(Guid friendId)
         {
             try
             {
@@ -104,7 +115,7 @@ namespace Cat.Users.Controllers
         }
 
         [HttpGet("find/{username}")]
-        public IActionResult Find(string username)
+        public ActionResult Find(string username)
         {
             FriendFindOutput output = null;
 

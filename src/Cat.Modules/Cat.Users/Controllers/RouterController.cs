@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Cat.Users.Controllers
 {
@@ -36,31 +37,38 @@ namespace Cat.Users.Controllers
         }
 
         [HttpGet("get")]
-        public IActionResult Get()
+        public async Task<ActionResult> Get()
         {
-            var poll = Convert.ToInt32(_cacheManage.GetString(CacheKeys.POLL));
-
-            var client = new ConsulClient(x => x.Address = new Uri($"http://{_configuration["Consul:IP"]}:{_configuration["Consul:Port"]}"));
-
-            var services = client.Catalog.Service(_configuration["Service:Name"]).Result.Response.ToList();
-
-            if (services.Count < 1)
+            try
             {
-                return BadRequest("获取不到服务器信息！");
+                var poll = Convert.ToInt32(await _cacheManage.GetStringAsync(CacheKeys.POLL));
+
+                var client = new ConsulClient(x => x.Address = new Uri($"http://{_configuration["Consul:IP"]}:{_configuration["Consul:Port"]}"));
+
+                var services = client.Catalog.Service(_configuration["Service:Name"]).Result.Response.ToList();
+
+                if (services.Count < 1)
+                {
+                    return BadRequest("获取不到服务器信息！");
+                }
+
+                var position = poll % services.Count;
+                poll++;
+
+                await _cacheManage.SetStringAsync(CacheKeys.POLL, poll.ToString());
+
+                return Ok(new { services[position].ServiceAddress, services[position].ServicePort });
             }
-
-            var position = poll % services.Count;
-            poll++;
-
-            _cacheManage.SetString(CacheKeys.POLL, poll.ToString());
-
-            return Ok(new { services[position].ServiceAddress, services[position].ServicePort });
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost("register")]
-        public IActionResult Register(RouterRegisterInput input)
+        public async Task<ActionResult> Register(RouterRegisterInput input)
         {
-            _cacheManage.SetString($"{CacheKeys.ROUTER}{_workContext.CurrentUser.Id}", input.Router);
+            await _cacheManage.SetStringAsync($"{CacheKeys.ROUTER}{_workContext.CurrentUser.Id}", input.Router);
 
             return Ok();
         }

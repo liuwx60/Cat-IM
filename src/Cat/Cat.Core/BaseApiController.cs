@@ -20,42 +20,42 @@ namespace Cat.Core
             base.OnActionExecuting(context);
         }
 
-        protected IActionResult BadRequest(string message)
+        protected ActionResult BadRequest(string message)
         {
             return BadRequest(new { message });
         }
         
-        protected IActionResult JsonPagedList<T>(IPagedList<T> list)
+        protected JsonPagedList<T> JsonPagedList<T>(IPagedList<T> list)
         {
-            return Ok(new { total = list.TotalCount, rows = list });
+            return new JsonPagedList<T> { Rows = list, Total = list.TotalCount };
         }
         
-        protected IActionResult JsonPagedList<T>(IList<T> list, int totalItemCount)
+        protected JsonPagedList<T> JsonPagedList<T>(IList<T> list, int totalItemCount)
         {
-            return Ok(new { total = totalItemCount, rows = list });
+            return new JsonPagedList<T> { Rows = list, Total = totalItemCount };
         }
 
-        protected IActionResult JsonMappingPagedList<T, M>(IPagedList<T> list)
+        protected JsonPagedList<M> JsonMappingPagedList<T, M>(IPagedList<T> list)
         {
             var mapperList = Mapper.Map<IList<T>, IList<M>>(list);
-            return Ok(new { total = list.TotalCount, row = mapperList });
+            return new JsonPagedList<M> { Rows = mapperList, Total = list.TotalCount };
         }
 
-        protected IActionResult JsonMappingPagedList<T, M>(IList<T> list, int totalItemCount)
+        protected JsonPagedList<M> JsonMappingPagedList<T, M>(IList<T> list, int totalItemCount)
         {
             var mapperList = Mapper.Map<IList<T>, IList<M>>(list);
-            return Ok(new { total = totalItemCount, row = mapperList });
+            return new JsonPagedList<M> { Rows = mapperList, Total = totalItemCount };
         }
 
-        protected IActionResult JsonMappingList<T, M>(IList<T> list)
+        protected List<M> JsonMappingList<T, M>(IList<T> list)
         {
-            var mapperList = Mapper.Map<IList<T>, IList<M>>(list);
-            return Ok(mapperList);
+            var mapperList = Mapper.Map<IList<T>, List<M>>(list);
+            return mapperList;
         }
 
-        protected IActionResult JsonObject<T, M>(T o)
+        protected M JsonObject<T, M>(T o)
         {
-            return Ok(Mapper.Map<T, M>(o));
+            return Mapper.Map<T, M>(o);
         }
     }
 }
