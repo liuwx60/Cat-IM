@@ -47,7 +47,7 @@ namespace Cat.Users.Controllers
 
         [AllowAnonymous]
         [HttpPost("register")]
-        public IActionResult Register(RegisterInput input)
+        public ActionResult Register(RegisterInput input)
         {
             try
             {
@@ -63,7 +63,7 @@ namespace Cat.Users.Controllers
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public IActionResult Login(LoginInput input)
+        public ActionResult<UserTokenOutput> Login(LoginInput input)
         {
             UserTokenOutput output = null;
 
@@ -78,19 +78,26 @@ namespace Cat.Users.Controllers
                 return BadRequest(new { message = ex.Message });
             }
 
-            return Ok(output);
+            return output;
         }
         
         [HttpGet("get")]
-        public IActionResult Get()
+        public ActionResult<UserRecordOutput> Get()
         {
-            var user = _workContext.CurrentUser;
+            try
+            {
+                var user = _workContext.CurrentUser;
 
-            return JsonObject<User, UserRecordOutput>(user);
+                return JsonObject<User, UserRecordOutput>(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut("edit")]
-        public IActionResult Edit(UserRecordInput input)
+        public ActionResult Edit(UserRecordInput input)
         {
             try
             {
@@ -107,7 +114,7 @@ namespace Cat.Users.Controllers
         }
 
         [HttpPost("upload/avatar")]
-        public IActionResult UploadAvatar(IFormFile file)
+        public ActionResult UploadAvatar(IFormFile file)
         {
             try
             {
@@ -153,7 +160,7 @@ namespace Cat.Users.Controllers
 
         [AllowAnonymous]
         [HttpGet("avatar/{id}")]
-        public IActionResult Avatar(Guid id)
+        public ActionResult Avatar(Guid id)
         {
             if (!System.IO.File.Exists($"{_hostingEnvironment.WebRootPath}/upload/avatar/{id}.jpg"))
             {
@@ -165,7 +172,7 @@ namespace Cat.Users.Controllers
 
         [AllowAnonymous]
         [HttpPost("offline")]
-        public IActionResult Offline()
+        public ActionResult Offline()
         {
             try
             {

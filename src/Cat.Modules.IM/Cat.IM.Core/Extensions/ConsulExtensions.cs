@@ -18,13 +18,13 @@ namespace Cat.IM.Core.Extensions
                 Address = configuration["Service:IP"],
                 Port = Convert.ToInt32(configuration["Service:Port"]),
                 Tags = new[] { $"urlprefix-/{configuration["Service:Name"]}-{configuration["Service:IP"]}:{configuration["Service:Port"]}" },
-                //Check = new AgentServiceCheck
-                //{
-                //    DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(15),
-                //    Interval = TimeSpan.FromSeconds(10),
-                //    HTTP = $"http://{configuration["Service:IP"]}:{configuration["Service:Port"]}/api/health",
-                //    Timeout = TimeSpan.FromSeconds(5)
-                //}
+                Check = new AgentServiceCheck
+                {
+                    DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(15),
+                    Interval = TimeSpan.FromSeconds(10),
+                    HTTP = $"http://{configuration["Service:IP"]}:{configuration["Service:WebPort"]}/api/health",
+                    Timeout = TimeSpan.FromSeconds(5)
+                }
             }).Wait();
 
             return app;

@@ -26,6 +26,8 @@ namespace Cat.IM.Server.Handler
         {
             _logger.LogDebug($"[{context.GetUserId()}]下线");
 
+            _messageController.Offline(context);
+
             base.ChannelInactive(context);
         }
 

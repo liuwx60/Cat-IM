@@ -61,14 +61,14 @@ namespace Cat.Users.Services
 
         public User Get(string username)
         {
-            var user = _cacheManage.Get($"{CacheKeys.USER}{username}", () =>
+            var user = _cacheManage.GetAsync($"{CacheKeys.USER}{username}", () =>
             {
                 var query = _userRepository.Table.FirstOrDefault(x => x.Username == username);
 
                 Assert.IfNullThrow(query, "用户不存在");
 
                 return query;
-            });
+            }).Result;
 
             Assert.IfNullThrow(user, "用户不存在");
 
@@ -112,7 +112,7 @@ namespace Cat.Users.Services
 
             _userRepository.Update(user);
 
-            _cacheManage.Remove($"{CacheKeys.ROUTER}{id}");
+            _cacheManage.RemoveAsync($"{CacheKeys.ROUTER}{id}").Wait();
         }
     }
 }

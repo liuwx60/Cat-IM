@@ -33,8 +33,8 @@ namespace Cat.IM.Server
                 options.InstanceName = Configuration["Redis:InstanceName"];
             });
 
-            services.AddSingleton<IStartupFilter, ReceiverMessage>();
-            services.AddSingleton<IStartupFilter, CatIMServer>();
+            services.AddHostedService<CatIMServer>();
+            services.AddHostedService<ReceiverMessage>();
         }
         
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

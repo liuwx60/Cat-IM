@@ -1,13 +1,16 @@
 ﻿using Cat.Authorization.Filter;
 using Cat.Cache.Manage;
+using Cat.Chat.Models;
 using Cat.Chat.Services;
 using Cat.Chat.ViewModels.Api;
 using Cat.Core;
 using Cat.Core.Cache;
+using Cat.Core.Paged;
 using Cat.IM.Google.Protobuf;
 using Cat.Rabbit.Manage;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Threading.Tasks;
 
 namespace Cat.Chat.Controllers
 {
@@ -35,7 +38,7 @@ namespace Cat.Chat.Controllers
         }
 
         [HttpPost("sendMessage")]
-        public IActionResult SendMsg(SendMessageInput input)
+        public async Task<IActionResult> SendMsg(SendMessageInput input)
         {
             try
             {
@@ -52,7 +55,17 @@ namespace Cat.Chat.Controllers
                     }
                 };
 
-                _rabbitManage.SendMsg(_cacheManage.GetString($"{CacheKeys.ROUTER}{input.Receiver}"), message);
+                var routeKey = await _cacheManage.GetStringAsync($"{CacheKeys.ROUTER}{input.Receiver}");
+
+                if (string.IsNullOrWhiteSpace(routeKey))
+                {
+                    _rabbitManage.SendMsg("Cat.IM.OfflineMessage", message, "Cat.IM.OfflineMessage");
+                }
+                else
+                {
+                    _rabbitManage.SendMsg(routeKey, message);
+                }
+                
 
                 _chatRecordService.Add(input);
             }
@@ -65,11 +78,18 @@ namespace Cat.Chat.Controllers
         }
 
         [HttpGet("offlineMessage")]
-        public IActionResult OfflineMessage()
+        public ActionResult<JsonPagedList<OfflineMessage>> OfflineMessage()
         {
-            var pageList = _offlineMessageService.PagedList();
+            try
+            {
+                var pageList = _offlineMessageService.PagedList();
 
-            return JsonPagedList(pageList);
+                return JsonPagedList(pageList);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
