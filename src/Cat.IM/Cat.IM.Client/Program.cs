@@ -55,7 +55,7 @@ namespace Cat.IM.Client
 
                         var message = new CatMessage
                         {
-                            Type = CatMessage.Types.MessageType.Login,
+                            Type = MessageType.Login,
                             Login = new Login
                             {
                                 Token = token
@@ -67,32 +67,32 @@ namespace Cat.IM.Client
                         continue;
                     }
 
-                    if (action == "2")
-                    {
-                        Console.WriteLine("请输入接收者ID:");
+                    //if (action == "2")
+                    //{
+                    //    Console.WriteLine("请输入接收者ID:");
 
-                        var receiverId = Console.ReadLine();
+                    //    var receiverId = Console.ReadLine();
 
-                        Console.WriteLine($"请输入发送给{receiverId}的内容：");
+                    //    Console.WriteLine($"请输入发送给{receiverId}的内容：");
 
-                        var body = Console.ReadLine();
+                    //    var body = Console.ReadLine();
 
-                        var message = new CatMessage
-                        {
-                            Type = CatMessage.Types.MessageType.Chat,
-                            Chat = new Chat
-                            {
-                                Id = Guid.NewGuid().ToString(),
-                                Body = body,
-                                Receiver = receiverId,
-                                SendOn = DateTime.Now.ToString()
-                            }
-                        };
+                    //    var message = new CatMessage
+                    //    {
+                    //        Type = CatMessage.Types.MessageType.Chat,
+                    //        Chat = new Chat
+                    //        {
+                    //            Id = Guid.NewGuid().ToString(),
+                    //            Body = body,
+                    //            Receiver = receiverId,
+                    //            SendOn = DateTime.Now.ToString()
+                    //        }
+                    //    };
 
-                        await clientChannel.WriteAndFlushAsync(message);
+                    //    await clientChannel.WriteAndFlushAsync(message);
 
-                        continue;
-                    }
+                    //    continue;
+                    //}
                 }
 
                 await clientChannel.CloseAsync();

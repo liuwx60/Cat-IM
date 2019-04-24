@@ -27,12 +27,6 @@ namespace Cat.IM.Server.Controllers
             _logger = logger;
         }
 
-        [HttpGet("/a")]
-        public IActionResult Index()
-        {
-            return Content(CatMessage.Types.MessageType.Chat.ToString());
-        }
-
         [HttpGet("/aa")]
         public IActionResult Aa()
         {
@@ -41,40 +35,6 @@ namespace Cat.IM.Server.Controllers
             var service = client.Catalog.Service(_configuration["Service:Name"]).Result;
 
             return Ok(service.Response);
-        }
-
-        [HttpPost("/api/sendMessage")]
-        public IActionResult SendMessage(SendMessageInput input)
-        {
-            var context = SessionSocketHolder.Get(input.Receiver);
-
-            if (context == null)
-            {
-                _logger.LogWarning($"用户[{input.Receiver}]不在线！");
-
-                return Ok();
-            }
-
-            var message = new CatMessage
-            {
-                Type = input.Type
-            };
-
-            if (message.Type == CatMessage.Types.MessageType.Chat)
-            {
-                message.Chat = new Chat
-                {
-                    Id = input.Id,
-                    Sender = input.Sender.ToString(),
-                    Receiver = input.Receiver.ToString(),
-                    SendOn = input.SendOn.ToString(),
-                    Body = input.Body
-                };
-            }
-
-            context.WriteAndFlushAsync(message);
-
-            return Ok();
         }
     }
 }

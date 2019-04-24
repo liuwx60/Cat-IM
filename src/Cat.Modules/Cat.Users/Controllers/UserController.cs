@@ -169,8 +169,7 @@ namespace Cat.Users.Controllers
 
             return File($"/upload/avatar/{id}.jpg", "image/jpeg");
         }
-
-        [AllowAnonymous]
+        
         [HttpPost("offline")]
         public ActionResult Offline()
         {

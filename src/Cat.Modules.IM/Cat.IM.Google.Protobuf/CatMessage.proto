@@ -4,35 +4,37 @@ package Cat;
 
 option csharp_namespace = "Cat.IM.Google.Protobuf";
 
+message Base {
+  string Id = 1;
+  string Sender = 2;
+  string Receiver = 3;
+  string SendOn = 4;
+}
+
 message Login {
   string Token = 1;
 }
 
-message Ping {
-  string Body = 1;
+message Chat {
+  Base Info = 1;
+  string Body = 2;
 }
 
-message Chat {
-  string Id = 1;
-  string Body = 2;
-  string Sender = 3;
-  string Receiver = 4;
-  string SendOn = 5;
+enum MessageType {
+  LOGIN = 0;
+  PING = 1;
+  CHAT = 2;
+  IMG = 3;
+  FILE = 4;
+  ADD_FRIEND = 1001;
 }
 
 message CatMessage {
-  enum MessageType {
-    LOGIN = 0;
-    PING = 1;
-    CHAT = 2;
-	ADD_FRIEND = 1001;
-  }
-
   MessageType Type = 1;
-  
+
   oneof Message {
-    Login Login = 2;
-    Ping Ping = 3;
+    Base Base = 2;
+    Login Login = 3;
     Chat Chat = 4;
   }
 }

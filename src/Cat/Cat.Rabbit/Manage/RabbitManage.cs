@@ -46,7 +46,7 @@ namespace Cat.Rabbit.Manage
         {
             if (string.IsNullOrWhiteSpace(routeKey))
             {
-                _logger.LogInformation($"用户[{message.Chat.Receiver}]不在线！");
+                _logger.LogInformation($"用户[{message.Chat.Info.Receiver}]不在线！");
 
                 return;
             }

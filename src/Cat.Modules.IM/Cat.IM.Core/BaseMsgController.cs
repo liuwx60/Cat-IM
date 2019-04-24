@@ -22,7 +22,7 @@ namespace Cat.IM.Core
 
             var paramList = new List<object>
             {
-                message.GetType().GetProperty(type.ToString()).GetValue(message),
+                message.GetType().GetProperty(type.ToString())?.GetValue(message),
                 context
             };
 

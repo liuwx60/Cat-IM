@@ -24,28 +24,254 @@ namespace Cat.IM.Google.Protobuf {
     static CatMessageReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChBDYXRNZXNzYWdlLnByb3RvEgNDYXQiFgoFTG9naW4SDQoFVG9rZW4YASAB",
-            "KAkiFAoEUGluZxIMCgRCb2R5GAEgASgJIlIKBENoYXQSCgoCSWQYASABKAkS",
-            "DAoEQm9keRgCIAEoCRIOCgZTZW5kZXIYAyABKAkSEAoIUmVjZWl2ZXIYBCAB",
-            "KAkSDgoGU2VuZE9uGAUgASgJItQBCgpDYXRNZXNzYWdlEikKBFR5cGUYASAB",
-            "KA4yGy5DYXQuQ2F0TWVzc2FnZS5NZXNzYWdlVHlwZRIbCgVMb2dpbhgCIAEo",
-            "CzIKLkNhdC5Mb2dpbkgAEhkKBFBpbmcYAyABKAsyCS5DYXQuUGluZ0gAEhkK",
-            "BENoYXQYBCABKAsyCS5DYXQuQ2hhdEgAIj0KC01lc3NhZ2VUeXBlEgkKBUxP",
-            "R0lOEAASCAoEUElORxABEggKBENIQVQQAhIPCgpBRERfRlJJRU5EEOkHQgkK",
-            "B01lc3NhZ2VCGaoCFkNhdC5JTS5Hb29nbGUuUHJvdG9idWZiBnByb3RvMw=="));
+            "ChBDYXRNZXNzYWdlLnByb3RvEgNDYXQiRAoEQmFzZRIKCgJJZBgBIAEoCRIO",
+            "CgZTZW5kZXIYAiABKAkSEAoIUmVjZWl2ZXIYAyABKAkSDgoGU2VuZE9uGAQg",
+            "ASgJIhYKBUxvZ2luEg0KBVRva2VuGAEgASgJIi0KBENoYXQSFwoESW5mbxgB",
+            "IAEoCzIJLkNhdC5CYXNlEgwKBEJvZHkYAiABKAkiigEKCkNhdE1lc3NhZ2US",
+            "HgoEVHlwZRgBIAEoDjIQLkNhdC5NZXNzYWdlVHlwZRIZCgRCYXNlGAIgASgL",
+            "MgkuQ2F0LkJhc2VIABIbCgVMb2dpbhgDIAEoCzIKLkNhdC5Mb2dpbkgAEhkK",
+            "BENoYXQYBCABKAsyCS5DYXQuQ2hhdEgAQgkKB01lc3NhZ2UqUAoLTWVzc2Fn",
+            "ZVR5cGUSCQoFTE9HSU4QABIICgRQSU5HEAESCAoEQ0hBVBACEgcKA0lNRxAD",
+            "EggKBEZJTEUQBBIPCgpBRERfRlJJRU5EEOkHQhmqAhZDYXQuSU0uR29vZ2xl",
+            "LlByb3RvYnVmYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
-          new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Cat.IM.Google.Protobuf.MessageType), }, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::Cat.IM.Google.Protobuf.Base), global::Cat.IM.Google.Protobuf.Base.Parser, new[]{ "Id", "Sender", "Receiver", "SendOn" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Cat.IM.Google.Protobuf.Login), global::Cat.IM.Google.Protobuf.Login.Parser, new[]{ "Token" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Cat.IM.Google.Protobuf.Ping), global::Cat.IM.Google.Protobuf.Ping.Parser, new[]{ "Body" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Cat.IM.Google.Protobuf.Chat), global::Cat.IM.Google.Protobuf.Chat.Parser, new[]{ "Id", "Body", "Sender", "Receiver", "SendOn" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Cat.IM.Google.Protobuf.CatMessage), global::Cat.IM.Google.Protobuf.CatMessage.Parser, new[]{ "Type", "Login", "Ping", "Chat" }, new[]{ "Message" }, new[]{ typeof(global::Cat.IM.Google.Protobuf.CatMessage.Types.MessageType) }, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Cat.IM.Google.Protobuf.Chat), global::Cat.IM.Google.Protobuf.Chat.Parser, new[]{ "Info", "Body" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Cat.IM.Google.Protobuf.CatMessage), global::Cat.IM.Google.Protobuf.CatMessage.Parser, new[]{ "Type", "Base", "Login", "Chat" }, new[]{ "Message" }, null, null)
           }));
     }
     #endregion
 
   }
+  #region Enums
+  public enum MessageType {
+    [pbr::OriginalName("LOGIN")] Login = 0,
+    [pbr::OriginalName("PING")] Ping = 1,
+    [pbr::OriginalName("CHAT")] Chat = 2,
+    [pbr::OriginalName("IMG")] Img = 3,
+    [pbr::OriginalName("FILE")] File = 4,
+    [pbr::OriginalName("ADD_FRIEND")] AddFriend = 1001,
+  }
+
+  #endregion
+
   #region Messages
+  public sealed partial class Base : pb::IMessage<Base> {
+    private static readonly pb::MessageParser<Base> _parser = new pb::MessageParser<Base>(() => new Base());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<Base> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Cat.IM.Google.Protobuf.CatMessageReflection.Descriptor.MessageTypes[0]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public Base() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public Base(Base other) : this() {
+      id_ = other.id_;
+      sender_ = other.sender_;
+      receiver_ = other.receiver_;
+      sendOn_ = other.sendOn_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public Base Clone() {
+      return new Base(this);
+    }
+
+    /// <summary>Field number for the "Id" field.</summary>
+    public const int IdFieldNumber = 1;
+    private string id_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Id {
+      get { return id_; }
+      set {
+        id_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "Sender" field.</summary>
+    public const int SenderFieldNumber = 2;
+    private string sender_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Sender {
+      get { return sender_; }
+      set {
+        sender_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "Receiver" field.</summary>
+    public const int ReceiverFieldNumber = 3;
+    private string receiver_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Receiver {
+      get { return receiver_; }
+      set {
+        receiver_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "SendOn" field.</summary>
+    public const int SendOnFieldNumber = 4;
+    private string sendOn_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string SendOn {
+      get { return sendOn_; }
+      set {
+        sendOn_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as Base);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(Base other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Id != other.Id) return false;
+      if (Sender != other.Sender) return false;
+      if (Receiver != other.Receiver) return false;
+      if (SendOn != other.SendOn) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Id.Length != 0) hash ^= Id.GetHashCode();
+      if (Sender.Length != 0) hash ^= Sender.GetHashCode();
+      if (Receiver.Length != 0) hash ^= Receiver.GetHashCode();
+      if (SendOn.Length != 0) hash ^= SendOn.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Id.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(Id);
+      }
+      if (Sender.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(Sender);
+      }
+      if (Receiver.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(Receiver);
+      }
+      if (SendOn.Length != 0) {
+        output.WriteRawTag(34);
+        output.WriteString(SendOn);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Id.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Id);
+      }
+      if (Sender.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Sender);
+      }
+      if (Receiver.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Receiver);
+      }
+      if (SendOn.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(SendOn);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(Base other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Id.Length != 0) {
+        Id = other.Id;
+      }
+      if (other.Sender.Length != 0) {
+        Sender = other.Sender;
+      }
+      if (other.Receiver.Length != 0) {
+        Receiver = other.Receiver;
+      }
+      if (other.SendOn.Length != 0) {
+        SendOn = other.SendOn;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            Id = input.ReadString();
+            break;
+          }
+          case 18: {
+            Sender = input.ReadString();
+            break;
+          }
+          case 26: {
+            Receiver = input.ReadString();
+            break;
+          }
+          case 34: {
+            SendOn = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
   public sealed partial class Login : pb::IMessage<Login> {
     private static readonly pb::MessageParser<Login> _parser = new pb::MessageParser<Login>(() => new Login());
     private pb::UnknownFieldSet _unknownFields;
@@ -54,7 +280,7 @@ namespace Cat.IM.Google.Protobuf {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Cat.IM.Google.Protobuf.CatMessageReflection.Descriptor.MessageTypes[0]; }
+      get { return global::Cat.IM.Google.Protobuf.CatMessageReflection.Descriptor.MessageTypes[1]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -175,135 +401,6 @@ namespace Cat.IM.Google.Protobuf {
 
   }
 
-  public sealed partial class Ping : pb::IMessage<Ping> {
-    private static readonly pb::MessageParser<Ping> _parser = new pb::MessageParser<Ping>(() => new Ping());
-    private pb::UnknownFieldSet _unknownFields;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<Ping> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Cat.IM.Google.Protobuf.CatMessageReflection.Descriptor.MessageTypes[1]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Ping() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Ping(Ping other) : this() {
-      body_ = other.body_;
-      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Ping Clone() {
-      return new Ping(this);
-    }
-
-    /// <summary>Field number for the "Body" field.</summary>
-    public const int BodyFieldNumber = 1;
-    private string body_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Body {
-      get { return body_; }
-      set {
-        body_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as Ping);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(Ping other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (Body != other.Body) return false;
-      return Equals(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (Body.Length != 0) hash ^= Body.GetHashCode();
-      if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode();
-      }
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (Body.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(Body);
-      }
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(output);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (Body.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Body);
-      }
-      if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize();
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(Ping other) {
-      if (other == null) {
-        return;
-      }
-      if (other.Body.Length != 0) {
-        Body = other.Body;
-      }
-      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-            break;
-          case 10: {
-            Body = input.ReadString();
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
   public sealed partial class Chat : pb::IMessage<Chat> {
     private static readonly pb::MessageParser<Chat> _parser = new pb::MessageParser<Chat>(() => new Chat());
     private pb::UnknownFieldSet _unknownFields;
@@ -329,11 +426,8 @@ namespace Cat.IM.Google.Protobuf {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public Chat(Chat other) : this() {
-      id_ = other.id_;
+      info_ = other.info_ != null ? other.info_.Clone() : null;
       body_ = other.body_;
-      sender_ = other.sender_;
-      receiver_ = other.receiver_;
-      sendOn_ = other.sendOn_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -342,14 +436,14 @@ namespace Cat.IM.Google.Protobuf {
       return new Chat(this);
     }
 
-    /// <summary>Field number for the "Id" field.</summary>
-    public const int IdFieldNumber = 1;
-    private string id_ = "";
+    /// <summary>Field number for the "Info" field.</summary>
+    public const int InfoFieldNumber = 1;
+    private global::Cat.IM.Google.Protobuf.Base info_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Id {
-      get { return id_; }
+    public global::Cat.IM.Google.Protobuf.Base Info {
+      get { return info_; }
       set {
-        id_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        info_ = value;
       }
     }
 
@@ -361,39 +455,6 @@ namespace Cat.IM.Google.Protobuf {
       get { return body_; }
       set {
         body_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "Sender" field.</summary>
-    public const int SenderFieldNumber = 3;
-    private string sender_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Sender {
-      get { return sender_; }
-      set {
-        sender_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "Receiver" field.</summary>
-    public const int ReceiverFieldNumber = 4;
-    private string receiver_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Receiver {
-      get { return receiver_; }
-      set {
-        receiver_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "SendOn" field.</summary>
-    public const int SendOnFieldNumber = 5;
-    private string sendOn_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string SendOn {
-      get { return sendOn_; }
-      set {
-        sendOn_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
@@ -410,22 +471,16 @@ namespace Cat.IM.Google.Protobuf {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (Id != other.Id) return false;
+      if (!object.Equals(Info, other.Info)) return false;
       if (Body != other.Body) return false;
-      if (Sender != other.Sender) return false;
-      if (Receiver != other.Receiver) return false;
-      if (SendOn != other.SendOn) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (Id.Length != 0) hash ^= Id.GetHashCode();
+      if (info_ != null) hash ^= Info.GetHashCode();
       if (Body.Length != 0) hash ^= Body.GetHashCode();
-      if (Sender.Length != 0) hash ^= Sender.GetHashCode();
-      if (Receiver.Length != 0) hash ^= Receiver.GetHashCode();
-      if (SendOn.Length != 0) hash ^= SendOn.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -439,25 +494,13 @@ namespace Cat.IM.Google.Protobuf {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (Id.Length != 0) {
+      if (info_ != null) {
         output.WriteRawTag(10);
-        output.WriteString(Id);
+        output.WriteMessage(Info);
       }
       if (Body.Length != 0) {
         output.WriteRawTag(18);
         output.WriteString(Body);
-      }
-      if (Sender.Length != 0) {
-        output.WriteRawTag(26);
-        output.WriteString(Sender);
-      }
-      if (Receiver.Length != 0) {
-        output.WriteRawTag(34);
-        output.WriteString(Receiver);
-      }
-      if (SendOn.Length != 0) {
-        output.WriteRawTag(42);
-        output.WriteString(SendOn);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -467,20 +510,11 @@ namespace Cat.IM.Google.Protobuf {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (Id.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Id);
+      if (info_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Info);
       }
       if (Body.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Body);
-      }
-      if (Sender.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Sender);
-      }
-      if (Receiver.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Receiver);
-      }
-      if (SendOn.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(SendOn);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -493,20 +527,14 @@ namespace Cat.IM.Google.Protobuf {
       if (other == null) {
         return;
       }
-      if (other.Id.Length != 0) {
-        Id = other.Id;
+      if (other.info_ != null) {
+        if (info_ == null) {
+          info_ = new global::Cat.IM.Google.Protobuf.Base();
+        }
+        Info.MergeFrom(other.Info);
       }
       if (other.Body.Length != 0) {
         Body = other.Body;
-      }
-      if (other.Sender.Length != 0) {
-        Sender = other.Sender;
-      }
-      if (other.Receiver.Length != 0) {
-        Receiver = other.Receiver;
-      }
-      if (other.SendOn.Length != 0) {
-        SendOn = other.SendOn;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -520,23 +548,14 @@ namespace Cat.IM.Google.Protobuf {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 10: {
-            Id = input.ReadString();
+            if (info_ == null) {
+              info_ = new global::Cat.IM.Google.Protobuf.Base();
+            }
+            input.ReadMessage(info_);
             break;
           }
           case 18: {
             Body = input.ReadString();
-            break;
-          }
-          case 26: {
-            Sender = input.ReadString();
-            break;
-          }
-          case 34: {
-            Receiver = input.ReadString();
-            break;
-          }
-          case 42: {
-            SendOn = input.ReadString();
             break;
           }
         }
@@ -572,11 +591,11 @@ namespace Cat.IM.Google.Protobuf {
     public CatMessage(CatMessage other) : this() {
       type_ = other.type_;
       switch (other.MessageCase) {
+        case MessageOneofCase.Base:
+          Base = other.Base.Clone();
+          break;
         case MessageOneofCase.Login:
           Login = other.Login.Clone();
-          break;
-        case MessageOneofCase.Ping:
-          Ping = other.Ping.Clone();
           break;
         case MessageOneofCase.Chat:
           Chat = other.Chat.Clone();
@@ -593,34 +612,34 @@ namespace Cat.IM.Google.Protobuf {
 
     /// <summary>Field number for the "Type" field.</summary>
     public const int TypeFieldNumber = 1;
-    private global::Cat.IM.Google.Protobuf.CatMessage.Types.MessageType type_ = 0;
+    private global::Cat.IM.Google.Protobuf.MessageType type_ = 0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Cat.IM.Google.Protobuf.CatMessage.Types.MessageType Type {
+    public global::Cat.IM.Google.Protobuf.MessageType Type {
       get { return type_; }
       set {
         type_ = value;
       }
     }
 
+    /// <summary>Field number for the "Base" field.</summary>
+    public const int BaseFieldNumber = 2;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Cat.IM.Google.Protobuf.Base Base {
+      get { return messageCase_ == MessageOneofCase.Base ? (global::Cat.IM.Google.Protobuf.Base) message_ : null; }
+      set {
+        message_ = value;
+        messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.Base;
+      }
+    }
+
     /// <summary>Field number for the "Login" field.</summary>
-    public const int LoginFieldNumber = 2;
+    public const int LoginFieldNumber = 3;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Cat.IM.Google.Protobuf.Login Login {
       get { return messageCase_ == MessageOneofCase.Login ? (global::Cat.IM.Google.Protobuf.Login) message_ : null; }
       set {
         message_ = value;
         messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.Login;
-      }
-    }
-
-    /// <summary>Field number for the "Ping" field.</summary>
-    public const int PingFieldNumber = 3;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Cat.IM.Google.Protobuf.Ping Ping {
-      get { return messageCase_ == MessageOneofCase.Ping ? (global::Cat.IM.Google.Protobuf.Ping) message_ : null; }
-      set {
-        message_ = value;
-        messageCase_ = value == null ? MessageOneofCase.None : MessageOneofCase.Ping;
       }
     }
 
@@ -639,8 +658,8 @@ namespace Cat.IM.Google.Protobuf {
     /// <summary>Enum of possible cases for the "Message" oneof.</summary>
     public enum MessageOneofCase {
       None = 0,
-      Login = 2,
-      Ping = 3,
+      Base = 2,
+      Login = 3,
       Chat = 4,
     }
     private MessageOneofCase messageCase_ = MessageOneofCase.None;
@@ -669,8 +688,8 @@ namespace Cat.IM.Google.Protobuf {
         return true;
       }
       if (Type != other.Type) return false;
+      if (!object.Equals(Base, other.Base)) return false;
       if (!object.Equals(Login, other.Login)) return false;
-      if (!object.Equals(Ping, other.Ping)) return false;
       if (!object.Equals(Chat, other.Chat)) return false;
       if (MessageCase != other.MessageCase) return false;
       return Equals(_unknownFields, other._unknownFields);
@@ -680,8 +699,8 @@ namespace Cat.IM.Google.Protobuf {
     public override int GetHashCode() {
       int hash = 1;
       if (Type != 0) hash ^= Type.GetHashCode();
+      if (messageCase_ == MessageOneofCase.Base) hash ^= Base.GetHashCode();
       if (messageCase_ == MessageOneofCase.Login) hash ^= Login.GetHashCode();
-      if (messageCase_ == MessageOneofCase.Ping) hash ^= Ping.GetHashCode();
       if (messageCase_ == MessageOneofCase.Chat) hash ^= Chat.GetHashCode();
       hash ^= (int) messageCase_;
       if (_unknownFields != null) {
@@ -701,13 +720,13 @@ namespace Cat.IM.Google.Protobuf {
         output.WriteRawTag(8);
         output.WriteEnum((int) Type);
       }
-      if (messageCase_ == MessageOneofCase.Login) {
+      if (messageCase_ == MessageOneofCase.Base) {
         output.WriteRawTag(18);
-        output.WriteMessage(Login);
+        output.WriteMessage(Base);
       }
-      if (messageCase_ == MessageOneofCase.Ping) {
+      if (messageCase_ == MessageOneofCase.Login) {
         output.WriteRawTag(26);
-        output.WriteMessage(Ping);
+        output.WriteMessage(Login);
       }
       if (messageCase_ == MessageOneofCase.Chat) {
         output.WriteRawTag(34);
@@ -724,11 +743,11 @@ namespace Cat.IM.Google.Protobuf {
       if (Type != 0) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Type);
       }
+      if (messageCase_ == MessageOneofCase.Base) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Base);
+      }
       if (messageCase_ == MessageOneofCase.Login) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Login);
-      }
-      if (messageCase_ == MessageOneofCase.Ping) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Ping);
       }
       if (messageCase_ == MessageOneofCase.Chat) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Chat);
@@ -748,17 +767,17 @@ namespace Cat.IM.Google.Protobuf {
         Type = other.Type;
       }
       switch (other.MessageCase) {
+        case MessageOneofCase.Base:
+          if (Base == null) {
+            Base = new global::Cat.IM.Google.Protobuf.Base();
+          }
+          Base.MergeFrom(other.Base);
+          break;
         case MessageOneofCase.Login:
           if (Login == null) {
             Login = new global::Cat.IM.Google.Protobuf.Login();
           }
           Login.MergeFrom(other.Login);
-          break;
-        case MessageOneofCase.Ping:
-          if (Ping == null) {
-            Ping = new global::Cat.IM.Google.Protobuf.Ping();
-          }
-          Ping.MergeFrom(other.Ping);
           break;
         case MessageOneofCase.Chat:
           if (Chat == null) {
@@ -780,25 +799,25 @@ namespace Cat.IM.Google.Protobuf {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 8: {
-            type_ = (global::Cat.IM.Google.Protobuf.CatMessage.Types.MessageType) input.ReadEnum();
+            type_ = (global::Cat.IM.Google.Protobuf.MessageType) input.ReadEnum();
             break;
           }
           case 18: {
+            global::Cat.IM.Google.Protobuf.Base subBuilder = new global::Cat.IM.Google.Protobuf.Base();
+            if (messageCase_ == MessageOneofCase.Base) {
+              subBuilder.MergeFrom(Base);
+            }
+            input.ReadMessage(subBuilder);
+            Base = subBuilder;
+            break;
+          }
+          case 26: {
             global::Cat.IM.Google.Protobuf.Login subBuilder = new global::Cat.IM.Google.Protobuf.Login();
             if (messageCase_ == MessageOneofCase.Login) {
               subBuilder.MergeFrom(Login);
             }
             input.ReadMessage(subBuilder);
             Login = subBuilder;
-            break;
-          }
-          case 26: {
-            global::Cat.IM.Google.Protobuf.Ping subBuilder = new global::Cat.IM.Google.Protobuf.Ping();
-            if (messageCase_ == MessageOneofCase.Ping) {
-              subBuilder.MergeFrom(Ping);
-            }
-            input.ReadMessage(subBuilder);
-            Ping = subBuilder;
             break;
           }
           case 34: {
@@ -813,20 +832,6 @@ namespace Cat.IM.Google.Protobuf {
         }
       }
     }
-
-    #region Nested types
-    /// <summary>Container for nested types declared in the CatMessage message type.</summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static partial class Types {
-      public enum MessageType {
-        [pbr::OriginalName("LOGIN")] Login = 0,
-        [pbr::OriginalName("PING")] Ping = 1,
-        [pbr::OriginalName("CHAT")] Chat = 2,
-        [pbr::OriginalName("ADD_FRIEND")] AddFriend = 1001,
-      }
-
-    }
-    #endregion
 
   }
 

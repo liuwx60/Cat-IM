@@ -15,6 +15,6 @@ namespace Cat.IM.Server.ViewModels.Api
 
         public DateTime SendOn { get; set; }
 
-        public CatMessage.Types.MessageType Type { get; set; } = CatMessage.Types.MessageType.Chat;
+        public MessageType Type { get; set; } = MessageType.Chat;
     }
 }

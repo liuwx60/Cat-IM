@@ -47,11 +47,14 @@ namespace Cat.Chat.Controllers
                     Type = input.Type,
                     Chat = new IM.Google.Protobuf.Chat
                     {
-                        Id = input.Id.ToString(),
-                        Body = input.Body,
-                        Sender = input.Sender.ToString(),
-                        Receiver = input.Receiver.ToString(),
-                        SendOn = input.SendOn.ToString(),
+                        Info = new Base
+                        {
+                            Id = input.Id.ToString(),
+                            Sender = input.Sender.ToString(),
+                            Receiver = input.Receiver.ToString(),
+                            SendOn = input.SendOn.ToString(),
+                        },
+                        Body = input.Body
                     }
                 };
 

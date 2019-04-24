@@ -52,17 +52,13 @@ namespace Cat.IM.Server.Controllers
             SessionSocketHolder.Add(response.Data.Id, context);
         }
 
-        public void Ping(Ping input, IChannelHandlerContext context)
+        public void Ping(CatMessage message, IChannelHandlerContext context)
         {
             context.UpdateReaderTime(DateTime.Now);
 
-            var message = new CatMessage
+            message = new CatMessage
             {
-                Type = CatMessage.Types.MessageType.Ping,
-                Ping = new Ping
-                {
-                    Body = "pong"
-                }
+                Type = MessageType.Ping
             };
 
             context.WriteAndFlushAsync(message);
