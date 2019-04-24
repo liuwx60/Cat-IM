@@ -22,8 +22,7 @@ namespace Cat.IM.Client
                 {
                     var message = new CatMessage
                     {
-                        Type = CatMessage.Types.MessageType.Ping,
-                        Ping = new Ping { Body = "ping" }
+                        Type = MessageType.Ping
                     };
 
                     context.WriteAndFlushAsync(message);

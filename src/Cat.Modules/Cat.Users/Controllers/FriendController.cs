@@ -62,13 +62,12 @@ namespace Cat.Users.Controllers
 
                 var message = new CatMessage
                 {
-                    Type = CatMessage.Types.MessageType.AddFriend,
-                    Chat = new Chat
+                    Type = MessageType.AddFriend,
+                    Base = new Base
                     {
                         Sender = _workContext.CurrentUser.Id.ToString(),
                         Receiver = friendId.ToString(),
                         SendOn = DateTime.Now.ToString(),
-                        Body = string.Empty
                     }
                 };
 

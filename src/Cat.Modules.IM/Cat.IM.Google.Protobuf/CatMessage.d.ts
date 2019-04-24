@@ -2,6 +2,114 @@ import * as $protobuf from "protobufjs";
 /** Namespace Cat. */
 export namespace Cat {
 
+    /** Properties of a Base. */
+    interface IBase {
+
+        /** Base Id */
+        Id?: (string|null);
+
+        /** Base Sender */
+        Sender?: (string|null);
+
+        /** Base Receiver */
+        Receiver?: (string|null);
+
+        /** Base SendOn */
+        SendOn?: (string|null);
+    }
+
+    /** Represents a Base. */
+    class Base implements IBase {
+
+        /**
+         * Constructs a new Base.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: Cat.IBase);
+
+        /** Base Id. */
+        public Id: string;
+
+        /** Base Sender. */
+        public Sender: string;
+
+        /** Base Receiver. */
+        public Receiver: string;
+
+        /** Base SendOn. */
+        public SendOn: string;
+
+        /**
+         * Creates a new Base instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns Base instance
+         */
+        public static create(properties?: Cat.IBase): Cat.Base;
+
+        /**
+         * Encodes the specified Base message. Does not implicitly {@link Cat.Base.verify|verify} messages.
+         * @param message Base message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: Cat.IBase, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified Base message, length delimited. Does not implicitly {@link Cat.Base.verify|verify} messages.
+         * @param message Base message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: Cat.IBase, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a Base message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns Base
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): Cat.Base;
+
+        /**
+         * Decodes a Base message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns Base
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): Cat.Base;
+
+        /**
+         * Verifies a Base message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a Base message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns Base
+         */
+        public static fromObject(object: { [k: string]: any }): Cat.Base;
+
+        /**
+         * Creates a plain object from a Base message. Also converts values to other types if specified.
+         * @param message Base
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: Cat.Base, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this Base to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
     /** Properties of a Login. */
     interface ILogin {
 
@@ -92,113 +200,14 @@ export namespace Cat {
         public toJSON(): { [k: string]: any };
     }
 
-    /** Properties of a Ping. */
-    interface IPing {
-
-        /** Ping Body */
-        Body?: (string|null);
-    }
-
-    /** Represents a Ping. */
-    class Ping implements IPing {
-
-        /**
-         * Constructs a new Ping.
-         * @param [properties] Properties to set
-         */
-        constructor(properties?: Cat.IPing);
-
-        /** Ping Body. */
-        public Body: string;
-
-        /**
-         * Creates a new Ping instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns Ping instance
-         */
-        public static create(properties?: Cat.IPing): Cat.Ping;
-
-        /**
-         * Encodes the specified Ping message. Does not implicitly {@link Cat.Ping.verify|verify} messages.
-         * @param message Ping message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(message: Cat.IPing, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Encodes the specified Ping message, length delimited. Does not implicitly {@link Cat.Ping.verify|verify} messages.
-         * @param message Ping message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encodeDelimited(message: Cat.IPing, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Decodes a Ping message from the specified reader or buffer.
-         * @param reader Reader or buffer to decode from
-         * @param [length] Message length if known beforehand
-         * @returns Ping
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): Cat.Ping;
-
-        /**
-         * Decodes a Ping message from the specified reader or buffer, length delimited.
-         * @param reader Reader or buffer to decode from
-         * @returns Ping
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): Cat.Ping;
-
-        /**
-         * Verifies a Ping message.
-         * @param message Plain object to verify
-         * @returns `null` if valid, otherwise the reason why it is not
-         */
-        public static verify(message: { [k: string]: any }): (string|null);
-
-        /**
-         * Creates a Ping message from a plain object. Also converts values to their respective internal types.
-         * @param object Plain object
-         * @returns Ping
-         */
-        public static fromObject(object: { [k: string]: any }): Cat.Ping;
-
-        /**
-         * Creates a plain object from a Ping message. Also converts values to other types if specified.
-         * @param message Ping
-         * @param [options] Conversion options
-         * @returns Plain object
-         */
-        public static toObject(message: Cat.Ping, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-        /**
-         * Converts this Ping to JSON.
-         * @returns JSON object
-         */
-        public toJSON(): { [k: string]: any };
-    }
-
     /** Properties of a Chat. */
     interface IChat {
 
-        /** Chat Id */
-        Id?: (string|null);
+        /** Chat Info */
+        Info?: (Cat.IBase|null);
 
         /** Chat Body */
         Body?: (string|null);
-
-        /** Chat Sender */
-        Sender?: (string|null);
-
-        /** Chat Receiver */
-        Receiver?: (string|null);
-
-        /** Chat SendOn */
-        SendOn?: (string|null);
     }
 
     /** Represents a Chat. */
@@ -210,20 +219,11 @@ export namespace Cat {
          */
         constructor(properties?: Cat.IChat);
 
-        /** Chat Id. */
-        public Id: string;
+        /** Chat Info. */
+        public Info?: (Cat.IBase|null);
 
         /** Chat Body. */
         public Body: string;
-
-        /** Chat Sender. */
-        public Sender: string;
-
-        /** Chat Receiver. */
-        public Receiver: string;
-
-        /** Chat SendOn. */
-        public SendOn: string;
 
         /**
          * Creates a new Chat instance using the specified properties.
@@ -296,17 +296,27 @@ export namespace Cat {
         public toJSON(): { [k: string]: any };
     }
 
+    /** MessageType enum. */
+    enum MessageType {
+        LOGIN = 0,
+        PING = 1,
+        CHAT = 2,
+        IMG = 3,
+        FILE = 4,
+        ADD_FRIEND = 1001
+    }
+
     /** Properties of a CatMessage. */
     interface ICatMessage {
 
         /** CatMessage Type */
-        Type?: (Cat.CatMessage.MessageType|null);
+        Type?: (Cat.MessageType|null);
+
+        /** CatMessage Base */
+        Base?: (Cat.IBase|null);
 
         /** CatMessage Login */
         Login?: (Cat.ILogin|null);
-
-        /** CatMessage Ping */
-        Ping?: (Cat.IPing|null);
 
         /** CatMessage Chat */
         Chat?: (Cat.IChat|null);
@@ -322,19 +332,19 @@ export namespace Cat {
         constructor(properties?: Cat.ICatMessage);
 
         /** CatMessage Type. */
-        public Type: Cat.CatMessage.MessageType;
+        public Type: Cat.MessageType;
+
+        /** CatMessage Base. */
+        public Base?: (Cat.IBase|null);
 
         /** CatMessage Login. */
         public Login?: (Cat.ILogin|null);
-
-        /** CatMessage Ping. */
-        public Ping?: (Cat.IPing|null);
 
         /** CatMessage Chat. */
         public Chat?: (Cat.IChat|null);
 
         /** CatMessage Message. */
-        public Message?: ("Login"|"Ping"|"Chat");
+        public Message?: ("Base"|"Login"|"Chat");
 
         /**
          * Creates a new CatMessage instance using the specified properties.
@@ -405,16 +415,5 @@ export namespace Cat {
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
-    }
-
-    namespace CatMessage {
-
-        /** MessageType enum. */
-        enum MessageType {
-            LOGIN = 0,
-            PING = 1,
-            CHAT = 2,
-            ADD_FRIEND = 1001
-        }
     }
 }

@@ -33,11 +33,11 @@ namespace Cat.IM.Server.Run
 
             _rabbitManage.Receiver(routerKey, x =>
             {
-                var context = SessionSocketHolder.Get(Guid.Parse(x.Chat.Receiver));
+                var context = SessionSocketHolder.Get(Guid.Parse(x.Chat.Info.Receiver));
 
                 if (context == null)
                 {
-                    _logger.LogWarning($"用户[{x.Chat.Receiver}]不在线！");
+                    _logger.LogWarning($"用户[{x.Chat.Info.Receiver}]不在线！");
 
                     _rabbitManage.SendMsg("Cat.IM.OfflineMessage", x, "Cat.IM.OfflineMessage");
 

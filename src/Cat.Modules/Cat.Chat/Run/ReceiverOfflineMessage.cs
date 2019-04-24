@@ -37,11 +37,11 @@ namespace Cat.Chat.Run
             {
                 var offlineMessage = new OfflineMessage
                 {
-                    Id = Guid.Parse(x.Chat.Id),
+                    Id = Guid.Parse(x.Chat.Info.Id),
                     Body = x.Chat.Body,
-                    Sender = Guid.Parse(x.Chat.Sender),
-                    Receiver = Guid.Parse(x.Chat.Receiver),
-                    SendOn = Convert.ToDateTime(x.Chat.SendOn),
+                    Sender = Guid.Parse(x.Chat.Info.Sender),
+                    Receiver = Guid.Parse(x.Chat.Info.Receiver),
+                    SendOn = Convert.ToDateTime(x.Chat.Info.SendOn),
                     Type = x.Type
                 };
 
