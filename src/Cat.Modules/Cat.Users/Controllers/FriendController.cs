@@ -1,9 +1,9 @@
 ﻿using Cat.Authorization.Filter;
-using Cat.Cache.Manage;
+using Cat.Cache.Manager;
 using Cat.Core;
 using Cat.Core.Cache;
 using Cat.IM.Google.Protobuf;
-using Cat.Rabbit.Manage;
+using Cat.Rabbit.Manager;
 using Cat.Users.Models;
 using Cat.Users.Services;
 using Cat.Users.ViewModels.Api;
@@ -22,20 +22,20 @@ namespace Cat.Users.Controllers
     {
         private readonly IFriendService _friendService;
         private readonly IWorkContext _workContext;
-        private readonly IRabbitManage _rabbitManage;
-        private readonly ICacheManage _cacheManage;
+        private readonly IRabbitManager _rabbitManager;
+        private readonly ICacheManager _cacheManager;
 
         public FriendController(
             IFriendService friendService,
             IWorkContext workContext,
-            IRabbitManage rabbitManage,
-            ICacheManage cacheManage
+            IRabbitManager rabbitManager,
+            ICacheManager cacheManager
             )
         {
             _friendService = friendService;
             _workContext = workContext;
-            _rabbitManage = rabbitManage;
-            _cacheManage = cacheManage;
+            _rabbitManager = rabbitManager;
+            _cacheManager = cacheManager;
         }
 
         [HttpGet("get")]
@@ -71,9 +71,9 @@ namespace Cat.Users.Controllers
                     }
                 };
 
-                var router = await _cacheManage.GetStringAsync($"{CacheKeys.ROUTER}{friendId}");
+                var router = await _cacheManager.GetStringAsync($"{CacheKeys.ROUTER}{friendId}");
 
-                _rabbitManage.SendMsg(router, message);
+                _rabbitManager.SendMsg(router, message);
             }
             catch (Exception ex)
             {

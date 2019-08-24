@@ -1,4 +1,4 @@
-﻿using Cat.Cache.Manage;
+﻿using Cat.Cache.Manager;
 using Cat.Core;
 using Cat.Core.Cache;
 using Cat.Core.Data;
@@ -15,15 +15,15 @@ namespace Cat.Users.Services
     public class UserService : IUserService
     {
         private readonly IRepository<User> _userRepository;
-        private readonly ICacheManage _cacheManage;
+        private readonly ICacheManager _cacheManager;
 
         public UserService(
             IRepository<User> userRepository,
-            ICacheManage cacheManage
+            ICacheManager cacheManager
             )
         {
             _userRepository = userRepository;
-            _cacheManage = cacheManage;
+            _cacheManager = cacheManager;
         }
 
         public void Register(RegisterInput input)
@@ -61,7 +61,7 @@ namespace Cat.Users.Services
 
         public User Get(string username)
         {
-            var user = _cacheManage.GetAsync($"{CacheKeys.USER}{username}", () =>
+            var user = _cacheManager.GetAsync($"{CacheKeys.USER}{username}", () =>
             {
                 var query = _userRepository.Table.FirstOrDefault(x => x.Username == username);
 
@@ -112,7 +112,7 @@ namespace Cat.Users.Services
 
             _userRepository.Update(user);
 
-            _cacheManage.RemoveAsync($"{CacheKeys.ROUTER}{id}").Wait();
+            _cacheManager.RemoveAsync($"{CacheKeys.ROUTER}{id}").Wait();
         }
     }
 }

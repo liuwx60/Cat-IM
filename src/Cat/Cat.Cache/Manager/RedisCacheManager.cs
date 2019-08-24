@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cat.Cache.Manage
+namespace Cat.Cache.Manager
 {
-    public class RedisCacheManage : ICacheManage
+    public class RedisCacheManager : ICacheManager
     {
         private readonly IDistributedCache _cache;
 
-        public RedisCacheManage(IDistributedCache cache)
+        public RedisCacheManager(IDistributedCache cache)
         {
             _cache = cache;
         }

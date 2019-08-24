@@ -25,21 +25,21 @@ namespace Cat.Users.Controllers
     public class UserController : BaseApiController
     {
         private readonly IUserService _userService;
-        private readonly IAuthorizationManage _authorizationManage;
+        private readonly IAuthorizationManager _authorizationManager;
         private readonly IWorkContext _workContext;
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly ILogger<UserController> _logger;
 
         public UserController(
             IUserService userService,
-            IAuthorizationManage authorizationManage,
+            IAuthorizationManager authorizationManager,
             IWorkContext workContext,
             IHostingEnvironment hostingEnvironment,
             ILogger<UserController> logger
             )
         {
             _userService = userService;
-            _authorizationManage = authorizationManage;
+            _authorizationManager = authorizationManager;
             _workContext = workContext;
             _hostingEnvironment = hostingEnvironment;
             _logger = logger;
@@ -71,7 +71,7 @@ namespace Cat.Users.Controllers
             {
                 var user = _userService.Login(input);
 
-                output = _authorizationManage.UserToken(user.Username);
+                output = _authorizationManager.UserToken(user.Username);
             }
             catch (Exception ex)
             {

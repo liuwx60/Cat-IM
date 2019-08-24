@@ -1,4 +1,4 @@
-﻿using Cat.Cache.Manage;
+﻿using Cat.Cache.Manager;
 using Cat.Core.Cache;
 using Cat.IM.Core;
 using Cat.IM.Google.Protobuf;
@@ -16,17 +16,17 @@ namespace Cat.IM.Server.Controllers
     {
         private readonly ILogger<MessageController> _logger;
         private readonly IConfiguration _configuration;
-        private readonly ICacheManage _cacheManage;
+        private readonly ICacheManager _cacheManager;
 
         public MessageController(
             ILogger<MessageController> logger,
             IConfiguration configuration,
-            ICacheManage cacheManage
+            ICacheManager cacheManager
             )
         {
             _logger = logger;
             _configuration = configuration;
-            _cacheManage = cacheManage;
+            _cacheManager = cacheManager;
         }
 
         public void Login(Login input, IChannelHandlerContext context)
@@ -47,7 +47,7 @@ namespace Cat.IM.Server.Controllers
 
             context.SetUserId(response.Data.Id);
 
-            _cacheManage.SetString($"{CacheKeys.ROUTER}{response.Data.Id}", $"{_configuration["Service:IP"]}:{_configuration["Service:Port"]}");
+            _cacheManager.SetString($"{CacheKeys.ROUTER}{response.Data.Id}", $"{_configuration["Service:IP"]}:{_configuration["Service:Port"]}");
 
             SessionSocketHolder.Add(response.Data.Id, context);
         }
@@ -82,7 +82,7 @@ namespace Cat.IM.Server.Controllers
 
         public void Offline(IChannelHandlerContext context)
         {
-            _cacheManage.Remove($"{CacheKeys.ROUTER}{context.GetUserId()}");
+            _cacheManager.Remove($"{CacheKeys.ROUTER}{context.GetUserId()}");
 
             SessionSocketHolder.Remove(context.GetUserId());
         }

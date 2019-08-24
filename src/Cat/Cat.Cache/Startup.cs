@@ -1,4 +1,4 @@
-﻿using Cat.Cache.Manage;
+﻿using Cat.Cache.Manager;
 using Cat.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -28,7 +28,7 @@ namespace Cat.Cache
                 options.InstanceName = configuration["Redis:InstanceName"];
             });
 
-            services.AddSingleton<ICacheManage, RedisCacheManage>();
+            services.AddSingleton<ICacheManager, RedisCacheManager>();
         }
     }
 }

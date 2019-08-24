@@ -22,7 +22,7 @@ namespace Cat.Authorization
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IAuthorizationManage, AuthorizationManage>();
+            services.AddScoped<IAuthorizationManager, AuthorizationManager>();
 
             var configuration = services.BuildServiceProvider().GetService<IConfiguration>();
 

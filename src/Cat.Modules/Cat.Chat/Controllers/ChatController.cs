@@ -1,5 +1,5 @@
 ﻿using Cat.Authorization.Filter;
-using Cat.Cache.Manage;
+using Cat.Cache.Manager;
 using Cat.Chat.Models;
 using Cat.Chat.Services;
 using Cat.Chat.ViewModels.Api;
@@ -7,7 +7,7 @@ using Cat.Core;
 using Cat.Core.Cache;
 using Cat.Core.Paged;
 using Cat.IM.Google.Protobuf;
-using Cat.Rabbit.Manage;
+using Cat.Rabbit.Manager;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -20,20 +20,20 @@ namespace Cat.Chat.Controllers
     public class ChatController : BaseApiController
     {
         private readonly IChatRecordService _chatRecordService;
-        private readonly IRabbitManage _rabbitManage;
-        private readonly ICacheManage _cacheManage;
+        private readonly IRabbitManager _rabbitManager;
+        private readonly ICacheManager _cacheManager;
         private readonly IOfflineMessageService _offlineMessageService;
 
         public ChatController(
             IChatRecordService chatRecordService,
-            IRabbitManage rabbitManage,
-            ICacheManage cacheManage,
+            IRabbitManager rabbitManager,
+            ICacheManager cacheManager,
             IOfflineMessageService offlineMessageService
             )
         {
             _chatRecordService = chatRecordService;
-            _rabbitManage = rabbitManage;
-            _cacheManage = cacheManage;
+            _rabbitManager = rabbitManager;
+            _cacheManager = cacheManager;
             _offlineMessageService = offlineMessageService;
         }
 
@@ -58,15 +58,15 @@ namespace Cat.Chat.Controllers
                     }
                 };
 
-                var routeKey = await _cacheManage.GetStringAsync($"{CacheKeys.ROUTER}{input.Receiver}");
+                var routeKey = await _cacheManager.GetStringAsync($"{CacheKeys.ROUTER}{input.Receiver}");
 
                 if (string.IsNullOrWhiteSpace(routeKey))
                 {
-                    _rabbitManage.SendMsg("Cat.IM.OfflineMessage", message, "Cat.IM.OfflineMessage");
+                    _rabbitManager.SendMsg("Cat.IM.OfflineMessage", message, "Cat.IM.OfflineMessage");
                 }
                 else
                 {
-                    _rabbitManage.SendMsg(routeKey, message);
+                    _rabbitManager.SendMsg(routeKey, message);
                 }
                 
 

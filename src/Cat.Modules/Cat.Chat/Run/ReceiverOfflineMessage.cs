@@ -1,7 +1,7 @@
 ﻿using Cat.Chat.Models;
 using Cat.Chat.Services;
 using Cat.Core.Data;
-using Cat.Rabbit.Manage;
+using Cat.Rabbit.Manager;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,16 +16,16 @@ namespace Cat.Chat.Run
 {
     public class ReceiverOfflineMessage : IHostedService
     {
-        private readonly IRabbitManage _rabbitManage;
+        private readonly IRabbitManager _rabbitManager;
         private readonly IServiceProvider _serviceProvider;
         private IOfflineMessageService _offlineMessageService;
 
         public ReceiverOfflineMessage(
-            IRabbitManage rabbitManage,
+            IRabbitManager rabbitManager,
             IServiceProvider serviceProvider
             )
         {
-            _rabbitManage = rabbitManage;
+            _rabbitManager = rabbitManager;
             _serviceProvider = serviceProvider;
         }
 
@@ -33,7 +33,7 @@ namespace Cat.Chat.Run
         {
             _offlineMessageService = _serviceProvider.CreateScope().ServiceProvider.GetRequiredService<IOfflineMessageService>();
 
-            _rabbitManage.Receiver("Cat.IM.OfflineMessage", x =>
+            _rabbitManager.Receiver("Cat.IM.OfflineMessage", x =>
             {
                 var offlineMessage = new OfflineMessage
                 {

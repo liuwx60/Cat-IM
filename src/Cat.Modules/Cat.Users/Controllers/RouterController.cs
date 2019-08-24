@@ -1,5 +1,5 @@
 ﻿using Cat.Authorization.Filter;
-using Cat.Cache.Manage;
+using Cat.Cache.Manager;
 using Cat.Core;
 using Cat.Core.Cache;
 using Cat.Users.Services;
@@ -21,17 +21,17 @@ namespace Cat.Users.Controllers
     [Route("api/router")]
     public class RouterController : BaseApiController
     {
-        private readonly ICacheManage _cacheManage;
+        private readonly ICacheManager _cacheManager;
         private readonly IWorkContext _workContext;
         private readonly IConfiguration _configuration;
 
         public RouterController(
-            ICacheManage cacheManage,
+            ICacheManager cacheManager,
             IWorkContext workContext,
             IConfiguration configuration
             )
         {
-            _cacheManage = cacheManage;
+            _cacheManager = cacheManager;
             _workContext = workContext;
             _configuration = configuration;
         }
@@ -41,7 +41,7 @@ namespace Cat.Users.Controllers
         {
             try
             {
-                var poll = Convert.ToInt32(await _cacheManage.GetStringAsync(CacheKeys.POLL));
+                var poll = Convert.ToInt32(await _cacheManager.GetStringAsync(CacheKeys.POLL));
 
                 var client = new ConsulClient(x => x.Address = new Uri($"http://{_configuration["Consul:IP"]}:{_configuration["Consul:Port"]}"));
 
@@ -55,7 +55,7 @@ namespace Cat.Users.Controllers
                 var position = poll % services.Count;
                 poll++;
 
-                await _cacheManage.SetStringAsync(CacheKeys.POLL, poll.ToString());
+                await _cacheManager.SetStringAsync(CacheKeys.POLL, poll.ToString());
 
                 return Ok(new { services[position].ServiceAddress, services[position].ServicePort });
             }
@@ -68,7 +68,7 @@ namespace Cat.Users.Controllers
         [HttpPost("register")]
         public async Task<ActionResult> Register(RouterRegisterInput input)
         {
-            await _cacheManage.SetStringAsync($"{CacheKeys.ROUTER}{_workContext.CurrentUser.Id}", input.Router);
+            await _cacheManager.SetStringAsync($"{CacheKeys.ROUTER}{_workContext.CurrentUser.Id}", input.Router);
 
             return Ok();
         }

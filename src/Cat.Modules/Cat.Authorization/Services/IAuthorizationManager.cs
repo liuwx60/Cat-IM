@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Cat.Authorization.Services
 {
-    public interface IAuthorizationManage
+    public interface IAuthorizationManager
     {
         UserTokenOutput UserToken(string username);
     }

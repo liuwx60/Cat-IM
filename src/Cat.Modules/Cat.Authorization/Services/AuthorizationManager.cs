@@ -9,11 +9,11 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Cat.Authorization.Services
 {
-    public class AuthorizationManage : IAuthorizationManage
+    public class AuthorizationManager : IAuthorizationManager
     {
         private readonly IConfiguration _configuration;
 
-        public AuthorizationManage(
+        public AuthorizationManager(
             IConfiguration configuration
             )
         {

@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Cat.Rabbit.Manage
+namespace Cat.Rabbit.Manager
 {
-    public interface IRabbitManage
+    public interface IRabbitManager
     {
         void SendMsg(string routeKey, CatMessage message, string queueName = "Cat.IM.Chat");
 

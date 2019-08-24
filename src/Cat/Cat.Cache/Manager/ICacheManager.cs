@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cat.Cache.Manage
+namespace Cat.Cache.Manager
 {
-    public interface ICacheManage
+    public interface ICacheManager
     {
         string GetString(string key, Func<string> func = null);
 

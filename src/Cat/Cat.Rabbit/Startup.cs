@@ -1,5 +1,5 @@
 ﻿using Cat.Core;
-using Cat.Rabbit.Manage;
+using Cat.Rabbit.Manager;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -17,7 +17,7 @@ namespace Cat.Rabbit
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IRabbitManage, RabbitManage>();
+            services.AddSingleton<IRabbitManager, RabbitManager>();
         }
     }
 }

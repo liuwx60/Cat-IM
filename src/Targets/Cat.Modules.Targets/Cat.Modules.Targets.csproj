@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Cat.Modules\Cat.Chat\Cat.Chat.csproj" />
+    <!-- <ProjectReference Include="..\..\Cat.Modules\Cat.Chat\Cat.Chat.csproj" /> -->
     <ProjectReference Include="..\..\Cat.Modules\Cat.File\Cat.File.csproj" />
     <ProjectReference Include="..\..\Cat.Modules\Cat.System\Cat.System.csproj" />
     <ProjectReference Include="..\..\Cat.Modules\Cat.Users\Cat.Users.csproj" />

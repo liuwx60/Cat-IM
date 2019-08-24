@@ -8,9 +8,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Cat.Rabbit.Manage
+namespace Cat.Rabbit.Manager
 {
-    public class RabbitManage : IRabbitManage
+    public class RabbitManager : IRabbitManager
     {
         private const string QueueName = "Cat.IM.Chat";
         private const string ExchangeName = "Cat.IM";
@@ -18,11 +18,11 @@ namespace Cat.Rabbit.Manage
         private readonly IConnectionFactory _connectionFactory;
         private readonly IConnection _connection;
         private readonly IModel _channel;
-        private readonly ILogger<RabbitManage> _logger;
+        private readonly ILogger<RabbitManager> _logger;
 
-        public RabbitManage(
+        public RabbitManager(
             IConfiguration configuration,
-            ILogger<RabbitManage> logger
+            ILogger<RabbitManager> logger
             )
         {
             _logger = logger;
