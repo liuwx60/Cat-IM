@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Cat\Cat.Core\Cat.Core.csproj" />
+    <!-- <ProjectReference Include="..\..\Cat\Cat.Core\Cat.Core.csproj" /> -->
+    <ProjectReference Include="..\..\Cat\Cat.EntityFramework\Cat.EntityFramework.csproj" />
   </ItemGroup>
 </Project>
