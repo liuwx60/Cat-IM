@@ -19,9 +19,9 @@ namespace Cat.File.Controllers
     {
         private static List<string> ImageExts = new List<string> { ".jpg", ".png", ".gif" };
 
-        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IWebHostEnvironment _hostingEnvironment;
 
-        public UploadController(IHostingEnvironment hostingEnvironment)
+        public UploadController(IWebHostEnvironment hostingEnvironment)
         {
             _hostingEnvironment = hostingEnvironment;
         }

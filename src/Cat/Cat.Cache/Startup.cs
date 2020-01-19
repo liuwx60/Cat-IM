@@ -3,9 +3,6 @@ using Cat.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Cat.Cache
 {
@@ -22,11 +19,13 @@ namespace Cat.Cache
         {
             var configuration = services.BuildServiceProvider().GetService<IConfiguration>();
 
-            services.AddDistributedRedisCache(options =>
-            {
-                options.Configuration = configuration["Redis:ConnectionString"];
-                options.InstanceName = configuration["Redis:InstanceName"];
-            });
+            services.AddDistributedMemoryCache();
+
+            //services.AddDistributedRedisCache(options =>
+            //{
+            //    options.Configuration = configuration["Redis:ConnectionString"];
+            //    options.InstanceName = configuration["Redis:InstanceName"];
+            //});
 
             services.AddSingleton<ICacheManager, RedisCacheManager>();
         }

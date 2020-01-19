@@ -27,14 +27,14 @@ namespace Cat.Users.Controllers
         private readonly IUserService _userService;
         private readonly IAuthorizationManager _authorizationManager;
         private readonly IWorkContext _workContext;
-        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly ILogger<UserController> _logger;
 
         public UserController(
             IUserService userService,
             IAuthorizationManager authorizationManager,
             IWorkContext workContext,
-            IHostingEnvironment hostingEnvironment,
+            IWebHostEnvironment hostingEnvironment,
             ILogger<UserController> logger
             )
         {

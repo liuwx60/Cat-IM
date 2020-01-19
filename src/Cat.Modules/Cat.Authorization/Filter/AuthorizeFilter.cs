@@ -13,9 +13,9 @@ namespace Cat.Authorization.Filter
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            var ignore = context.ActionDescriptor.FilterDescriptors
-                .Select(x => x.Filter.GetType())
-                .Any(x => x == typeof(AllowAnonymousFilter));
+            var ignore = context.ActionDescriptor.EndpointMetadata
+                .Select(x => x.GetType())
+                .Any(x => x == typeof(AllowAnonymousAttribute));
 
             if (ignore)
             {

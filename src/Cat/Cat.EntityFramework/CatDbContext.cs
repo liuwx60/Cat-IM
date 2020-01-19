@@ -21,8 +21,7 @@ namespace Cat.EntityFramework
                 .SelectMany(x => x.GetTypes())
                 .Where(type =>
                 (type.BaseType?.IsGenericType ?? false)
-                    && (type.BaseType.GetGenericTypeDefinition() == typeof(CatEntityTypeConfiguration<>)
-                        || type.BaseType.GetGenericTypeDefinition() == typeof(CatQueryTypeConfiguration<>)));
+                    && (type.BaseType.GetGenericTypeDefinition() == typeof(CatEntityTypeConfiguration<>)));
 
             foreach (var typeConfiguration in typeConfigurations)
             {

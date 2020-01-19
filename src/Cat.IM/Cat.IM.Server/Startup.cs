@@ -1,10 +1,8 @@
 using Cat.Core.Extensions;
-using Cat.IM.Core.Extensions;
 using Cat.IM.Server.Controllers;
 using Cat.IM.Server.Run;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -21,26 +19,18 @@ namespace Cat.IM.Server
         
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddControllersWithViews();
 
             services.AddCat();
 
             services.AddSingleton<MessageController>();
 
-            services.AddDistributedRedisCache(options =>
-            {
-                options.Configuration = Configuration["Redis:ConnectionString"];
-                options.InstanceName = Configuration["Redis:InstanceName"];
-            });
-
             services.AddHostedService<CatIMServer>();
             services.AddHostedService<ReceiverMessage>();
         }
         
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseConsul(Configuration);
-            app.UseMvc();
             app.UseCat();
         }
     }

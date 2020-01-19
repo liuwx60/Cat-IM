@@ -4,7 +4,6 @@ using Cat.Core;
 using Cat.Core.Cache;
 using Cat.Users.Services;
 using Cat.Users.ViewModels.Api;
-using Consul;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
@@ -37,32 +36,33 @@ namespace Cat.Users.Controllers
         }
 
         [HttpGet("get")]
-        public async Task<ActionResult> Get()
+        public ActionResult Get()
         {
-            try
-            {
-                var poll = Convert.ToInt32(await _cacheManager.GetStringAsync(CacheKeys.POLL));
+            return Ok();
+            //try
+            //{
+            //    var poll = Convert.ToInt32(await _cacheManager.GetStringAsync(CacheKeys.POLL));
 
-                var client = new ConsulClient(x => x.Address = new Uri($"http://{_configuration["Consul:IP"]}:{_configuration["Consul:Port"]}"));
+            //    var client = new ConsulClient(x => x.Address = new Uri($"http://{_configuration["Consul:IP"]}:{_configuration["Consul:Port"]}"));
 
-                var services = client.Catalog.Service(_configuration["Service:Name"]).Result.Response.ToList();
+            //    var services = client.Catalog.Service(_configuration["Service:Name"]).Result.Response.ToList();
 
-                if (services.Count < 1)
-                {
-                    return BadRequest("获取不到服务器信息！");
-                }
+            //    if (services.Count < 1)
+            //    {
+            //        return BadRequest("获取不到服务器信息！");
+            //    }
 
-                var position = poll % services.Count;
-                poll++;
+            //    var position = poll % services.Count;
+            //    poll++;
 
-                await _cacheManager.SetStringAsync(CacheKeys.POLL, poll.ToString());
+            //    await _cacheManager.SetStringAsync(CacheKeys.POLL, poll.ToString());
 
-                return Ok(new { services[position].ServiceAddress, services[position].ServicePort });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            //    return Ok(new { services[position].ServiceAddress, services[position].ServicePort });
+            //}
+            //catch (Exception ex)
+            //{
+            //    return BadRequest(ex.Message);
+            //}
         }
 
         [HttpPost("register")]
