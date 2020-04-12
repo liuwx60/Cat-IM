@@ -1,0 +1,12 @@
+#root {
+  height: 100%;
+}
+
+.search-form .ant-form-item {
+  display: flex;
+  margin-bottom: 0;
+}
+
+.search-form .ant-form-item-control-wrapper {
+  flex: 1;
+}

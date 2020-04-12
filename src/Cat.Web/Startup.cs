@@ -43,6 +43,16 @@ namespace Cat.Web
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Cat.Web" }
+                        },
+                        new[] { "readAccess", "writeAccess" }
+                    }
+                });
                 c.AddSecurityDefinition("Cat.Web", new OpenApiSecurityScheme
                 {
                     Name = "Authorization",

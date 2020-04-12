@@ -7,6 +7,6 @@ namespace Cat.Authorization.Services
 {
     public interface IAuthorizationManager
     {
-        UserTokenOutput UserToken(string username);
+        UserTokenOutput UserToken(string username, string role = "Admin");
     }
 }

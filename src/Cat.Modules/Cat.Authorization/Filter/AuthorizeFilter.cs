@@ -11,6 +11,13 @@ namespace Cat.Authorization.Filter
 {
     public class AuthorizeFilter : ActionFilterAttribute
     {
+        public string Role { get; set; }
+
+        public AuthorizeFilter(string role = "Admin")
+        {
+            Role = role;
+        }
+
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             var ignore = context.ActionDescriptor.EndpointMetadata
@@ -24,7 +31,7 @@ namespace Cat.Authorization.Filter
 
             var user = context.HttpContext.User;
 
-            if (!user.Identity.IsAuthenticated)
+            if (!user.Identity.IsAuthenticated || !user.IsInRole(Role))
             {
                 context.Result = new UnauthorizedResult();
             }

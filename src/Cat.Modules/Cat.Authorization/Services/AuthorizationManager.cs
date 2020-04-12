@@ -20,11 +20,12 @@ namespace Cat.Authorization.Services
             _configuration = configuration;
         }
 
-        public UserTokenOutput UserToken(string username)
+        public UserTokenOutput UserToken(string username, string role = "Admin")
         {
             var claims = new[]
             {
-                new Claim(ClaimTypes.Name, username)
+                new Claim(ClaimTypes.Name, username),
+                new Claim(ClaimTypes.Role, role)
             };
 
             var audienceConfig = _configuration.GetSection("Audience");
